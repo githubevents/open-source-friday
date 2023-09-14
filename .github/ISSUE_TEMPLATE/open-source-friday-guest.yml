@@ -1,0 +1,63 @@
+name: OSF Guest Invite Issue
+description: Use this form to invite a guest to Open Source Friday or have guests submit their information.
+title: Open Source Friday - [PROJECT NAME]
+labels: ["open-source-friday", "open-source", "twitch", "pending"]
+assignees: ["LadyKerr", "AndreaGriffiths11"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Open Source Friday Guest Invite Form
+        #### :sparkles: Please fill out the following information to be invited to Open Source Friday. The stream occurs weekly at 1pm EST on the [GitHub Twitch Channel](https://www.twitch.tv/github). :sparkles:
+
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: Your name
+
+  - type: input
+    id: email
+    attributes:
+      label: Your email address
+      description: Email address
+      placeholder: "hello@email.com"
+
+  - type: input
+    id: project_name_1
+    attributes:
+      label: Project Name
+      description: The name of the project you'd like to showcase and chat about
+
+  - type: input
+    id: project_repo_1
+    attributes:
+      label: Project Repo
+      description: The github repository of your project
+      placeholder: "github.com/"
+
+  - type: input
+    id: dates_1
+    attributes:
+      label: Dates
+      description: what date are you available for Open Source Friday stream?
+      placeholder: Month/Day/Year
+
+  - type: input
+    id: social_twitter
+    attributes:
+      label: Twitter URL
+      description: Your Twitter profile
+
+  - type: input
+    id: social_linkedin
+    attributes:
+      label: LinkedIn URL
+      description: Your LinkedIn profile
+
+  - type: textarea
+    id: more_info
+    attributes:
+      label: Additional Information
+      description: Please share any additional details you'd like us to know about your project
