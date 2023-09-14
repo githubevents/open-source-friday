@@ -11,62 +11,53 @@ body:
         ## Open Source Friday Guest Invite
         #### :sparkles: Please fill out the following information to be invited to Open Source Friday. The stream occurs weekly at 1pm EST on the [GitHub Twitch Channel](https://www.twitch.tv/github). :sparkles:
 
-        - id: name
-          type: input
-          attributes:
-            label: Name
-            description: Your name
-          required: true
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: Your name
 
-        - id: email
-          type: input
-          attributes:
-            label: Your email address
-            description: Email address
-            placeholder: "hello@email.coom"
-          required: true
+  - type: input
+    id: email
+    attributes:
+      label: Your email address
+      description: Email address
+      placeholder: "hello@email.coom"
 
-        - id: project_name_1
-          type: input
-          attributes:
-            label: Project Name
-            description: The name of the project you'd like to showcase and chat about
-          required: true
+  - type: input
+    id: project_name_1
+    attributes:
+      label: Project Name
+      description: The name of the project you'd like to showcase and chat about
 
-        - id: project_repo_1
-          type: input
-          attributes:
-            label: Project Repo
-            description: The github repository of your project
-            placeholder: "github.com/"
-          required: true
+  - type: input
+    id: project_repo_1
+    attributes:
+      label: Project Repo
+      description: The github repository of your project
+      placeholder: "github.com/"
 
-        - id: dates_1
-          type: input
-          attributes:
-            label: Dates
-            description: what date are you available for Open Source Friday stream?
-            placeholder: Month/Day/Year
-          required: true
+  - type: input
+    id: dates_1
+    attributes:
+      label: Dates
+      description: what date are you available for Open Source Friday stream?
+      placeholder: Month/Day/Year
 
-        - id: social_twitter
-          type: input
-          attributes:
-            label: Twitter URL
-            description: Your Twitter handle
-          required: false
+  - type: input
+    id: social_twitter
+    attributes:
+      label: Twitter URL
+      description: Your Twitter handle
 
-        - id: social_linkedin
-          type: input
-          attributes:
-            label: LinkedIn URL
-            description: Your LinkedIn profile
-          required: false
+  - type: input
+    id: social_linkedin
+    attributes:
+      label: LinkedIn URL
+      description: Your LinkedIn profile
 
-            - id: more_info
-              type: textarea
-              attributes:
-                label: Would you like to submit anything else?
-                placeholder: "Please share any additional details you'd like us to know about your project"
-              validations:
-                required: false
+  - type: textarea
+    id: more_info
+    attributes:
+      label: Additional Information
+      description: Please share any additional details you'd like us to know about your project
