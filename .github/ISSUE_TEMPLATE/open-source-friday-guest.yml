@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Open Source Friday Guest Invite
+        ## Open Source Friday Guest Invite Form
         #### :sparkles: Please fill out the following information to be invited to Open Source Friday. The stream occurs weekly at 1pm EST on the [GitHub Twitch Channel](https://www.twitch.tv/github). :sparkles:
 
   - type: input
@@ -22,7 +22,7 @@ body:
     attributes:
       label: Your email address
       description: Email address
-      placeholder: "hello@email.coom"
+      placeholder: "hello@email.com"
 
   - type: input
     id: project_name_1
@@ -48,7 +48,7 @@ body:
     id: social_twitter
     attributes:
       label: Twitter URL
-      description: Your Twitter handle
+      description: Your Twitter profile
 
   - type: input
     id: social_linkedin
