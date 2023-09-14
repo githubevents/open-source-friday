@@ -1,0 +1,72 @@
+name: OSF Guest Invite Issue
+description: Use this form to invite a guest to Open Source Friday or have guests submit their information.
+title: Open Source Friday - [PROJECT NAME]
+labels: ["open-source-friday", "open-source", "twitch", "pending"]
+assignees: ["LadyKerr", "AndreaGriffiths11"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Open Source Friday Guest Invite
+        #### :sparkles: Please fill out the following information to be invited to Open Source Friday. The stream occurs weekly at 1pm EST on the [GitHub Twitch Channel](https://www.twitch.tv/github). :sparkles:
+
+        - id: name
+          type: input
+          attributes:
+            label: Name
+            description: Your name
+          required: true
+
+        - id: email
+          type: input
+          attributes:
+            label: Your email address
+            description: Email address
+            placeholder: "hello@email.coom"
+          required: true
+
+        - id: Project Name
+          type: input
+          attributes:
+            label: Project Name
+            description: The name of the project you'd like to showcase and chat about
+          required: true
+
+        - id: project repo
+          type: input
+          attributes:
+            label: Project Repo
+            description: The github repository of your project
+            placeholder: "github.com/"
+          required: true
+
+        - id: dates
+          type: input
+          attributes:
+            label: Dates
+            description: what date are you available for Open Source Friday stream?
+            placeholder: Month/Day/Year
+          required: true
+
+        - id: twitter
+          type: input
+          attributes:
+            label: Twitter URL
+            description: Your Twitter handle
+          required: false
+
+        - id: linkedin
+          type: input
+          attributes:
+            label: LinkedIn URL
+            description: Your LinkedIn profile
+          required: false
+
+            - id: why
+              type: textarea
+              attributes:
+                label: Would you like to submit anything else?
+                placeholder: "Please share any additional details you'd like us to know about your project"
+              validations:
+                required: false
