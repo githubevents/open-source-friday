@@ -26,14 +26,14 @@ body:
             placeholder: "hello@email.coom"
           required: true
 
-        - id: Project Name
+        - id: project_name_1
           type: input
           attributes:
             label: Project Name
             description: The name of the project you'd like to showcase and chat about
           required: true
 
-        - id: project repo
+        - id: project_repo_1
           type: input
           attributes:
             label: Project Repo
@@ -41,7 +41,7 @@ body:
             placeholder: "github.com/"
           required: true
 
-        - id: dates
+        - id: dates_1
           type: input
           attributes:
             label: Dates
@@ -49,21 +49,21 @@ body:
             placeholder: Month/Day/Year
           required: true
 
-        - id: twitter
+        - id: social_twitter
           type: input
           attributes:
             label: Twitter URL
             description: Your Twitter handle
           required: false
 
-        - id: linkedin
+        - id: social_linkedin
           type: input
           attributes:
             label: LinkedIn URL
             description: Your LinkedIn profile
           required: false
 
-            - id: why
+            - id: more_info
               type: textarea
               attributes:
                 label: Would you like to submit anything else?
