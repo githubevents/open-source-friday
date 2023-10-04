@@ -1,13 +1,12 @@
 on:
-    schedule:
-        - cron: 0 5 * * 1
-name: Weekly Tips & Tricks Series
-
+  schedule:
+    - cron: 0 5 * * 1
+name: Weekly OSF STreams
 jobs:
-    createAnIssue:
-      name: Create an issue
-      runs-on: ubuntu-latest
-      steps:
+  createAnIssue:
+    name: Create an issue
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v2
       - name: Create an issue
         uses: bdougie/create-an-issue@e43b083ea71e22e77a81ffb4a55dacb2addb71ed
