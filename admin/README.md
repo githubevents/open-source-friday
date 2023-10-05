@@ -6,7 +6,7 @@ Ideal flow for actions:
 - they complete the form with the date selected and submit the issue
 - the issue is automatically assigned to LadyKerr and Andrea with the label `pending`
 - the issue triggers a workflow that creates a comment reminding the guest to book a time slot if t hey haven't already
-- we go in and add the `approved` label to the issue
+- we go in and add the `scheduled` label to the issue to confirm booking
 - At the approved label, the workflow triggers and creates a new comment in the issue reminding the hosts to create the event + assets
 - At the approved label the workflows triggers and creates a new comment in the issue seniding the guest instructions on how to join the event + prepare for it
 - day before the event the workflow sends a reminder to guest in the issue
