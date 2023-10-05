@@ -15,10 +15,13 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const issueBody = context.payload.issue.body;
-            const githubHandle = issueBody.match(/@(\w+)/)[1];
-            const issueComment = {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: `Hey @${githubHandle}✨,\n\nYou're officially scheduled for **Open Source Friday**! 🚀🎥. Here are some guidelines on preparing for the live stream:\n\n [Preparation Instructions](https://gist.github.com/LadyKerr/9b7d6dccde55b3f30398612d1290b7dc)\n\nLet us know if you have any questions!,\nKedasha & Andrea 👯`
-            };                      github.rest.issues.createComment(issueComment);
+            const githubHandleMatch = issueBody.match(/@[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}/gi);
+            if (githubHandleMatch && githubHandleMatch.length > 0) {
+                const githubHandle = githubHandleMatch[0].substring(1);  // Remove the '@' from the handle
+                const issueComment = {
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: context.issue.number,
+                    body: `Hey @${githubHandle}✨,\n\nYou're officially scheduled for **Open Source Friday**! 🚀🎥. Here are some guidelines on preparing for the live stream:\n\n [Preparation Instructions](https://gist.github.com/LadyKerr/9b7d6dccde55b3f30398612d1290b7dc)\n\nLet us know if you have any questions!,\nKedasha & Andrea 👯`
+                };
+                github.rest.issues.createComment(issueComment);                      }
