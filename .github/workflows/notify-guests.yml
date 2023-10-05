@@ -22,5 +22,5 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: `Hey @${context.issue.user.login}✨,\n\nThank you for your interest in Open Source Friday! Please remember to book a date and time for the stream at the following link: https://calendar.app.google/7fdFRJ7G1jeAM5Vy8 \n\nTalk soon,\nKedasha`
+                body: `Hey ✨,\n\nThank you for your interest in Open Source Friday! Please remember to book a date and time for the stream at the following link: https://calendar.app.google/7fdFRJ7G1jeAM5Vy8 \n\nTalk soon,\nKedasha`
             };                      github.rest.issues.createComment(issueComment);
