@@ -19,6 +19,13 @@ body:
       placeholder: "Kedasha Kerr"
 
   - type: input
+    id: github_handle
+    attributes:
+      label: GitHub Handle
+      description: Your GitHub handle
+      placeholder: "@LadyKerr"
+
+  - type: input
     id: project_name_1
     attributes:
       label: Project Name
