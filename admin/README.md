@@ -9,6 +9,9 @@ Ideal flow for actions:
 - we go in and add the `scheduled` label to the issue to confirm booking
 - At the approved label, the workflow triggers and creates a new comment in the issue reminding the hosts to create the event + assets
 - At the approved label the workflows triggers and creates a new comment in the issue seniding the guest instructions on how to join the event + prepare for it
+
+Not done yet:
+
 - day before the event the workflow sends a reminder to guest in the issue
 - post event the workflow sends a thank you message to the guest in the issue
 - post event the host closes the issue
