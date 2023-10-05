@@ -5,7 +5,7 @@ on:
     types: [opened, edited]
 
 jobs:
-  extract-date-and-schedule-reminder:
+  send-reminder:
     runs-on: ubuntu-latest
     steps:
       - name: Extract date and GitHub handle from issue body
@@ -15,20 +15,9 @@ jobs:
           HANDLE=$(echo '${{ github.event.issue.body }}' | grep -oP '@\w+')
           echo "::set-output name=date::$DATE"
           echo "::set-output name=handle::$HANDLE"
-      - name: Schedule reminder
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: Send Reminder Comment
-          token: ${{ secrets.GITHUB_TOKEN }}
-          inputs: '{"issue_number": "${{ github.event.issue.number }}", "date": "${{ steps.extract-date-and-handle.outputs.date }}", "handle": "${{ steps.extract-date-and-handle.outputs.handle }}"}'
-
-  send-reminder:
-    needs: extract-date-and-schedule-reminder
-    runs-on: ubuntu-latest
-    steps:
       - name: Wait until one day before date
         run: |
-          DATE="${{ needs.extract-date-and-schedule-reminder.outputs.date }}"
+          DATE="${{ steps.extract-date-and-handle.outputs.date }}"
           REMINDER_DATE=$(date -d "$DATE - 1 day" +'%Y-%m-%d')
           while [[ $(date -u +'%Y-%m-%d') < "$REMINDER_DATE" ]]; do
             sleep 86400  # Sleep for 24 hours
@@ -42,6 +31,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ github.event.issue.number }},
-              body: `This is a reminder that the event is scheduled for tomorrow. ${'{{ needs.extract-date-and-schedule-reminder.outputs.handle }}'}`
+              body: `This is a reminder that the event is scheduled for tomorrow. ${'{{ steps.extract-date-and-handle.outputs.handle }}'}`
             };
             github.rest.issues.createComment(issueComment);
