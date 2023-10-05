@@ -1,0 +1,22 @@
+name: Send Instructions to Guest
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  send-instructions:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'scheduled'
+    steps:
+      - name: Comment on issue
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issueComment = {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `Hi @${context.issue.user.login},\n\nThis issue has been approved. Here are the instructions on how to join the event and prepare for it:\n\n1. [Joining Instructions]\n2. [Preparation Instructions](https://github.com/githubevents/open-source-friday/blob/main/admin/guest-assets/Streaming-Guide.md)\n\nBest,\n[Your Name]`
+            };                      github.rest.issues.createComment(issueComment);

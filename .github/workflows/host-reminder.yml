@@ -1,0 +1,22 @@
+name: Remind Hosts
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  remind-hosts:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'scheduled'
+    steps:
+      - name: Comment on issue
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issueComment = {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `Hi @LadyKerr and @AndreaGriffiths11,\n\nThis stream has been scheduled. Please complete the following tasks:\n\n- [ ] Create social card\n- [ ] Create meetup link\n- [ ] Create and schedule twitch stream (Linkedin, Twitch, Youtube)\n- [ ] Schedule social media post (Twitter)\n- [ ] Send prep doc to guests\n\nYou can find the instructions in this [guide](https://github.com/githubevents/open-source-friday/blob/main/admin/guest-assets/Streaming-Guide.md).`
+            };                      github.rest.issues.createComment(issueComment);

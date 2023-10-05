@@ -1,0 +1,26 @@
+name: Notify User
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  notify-user:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if stream date is not yet scheduled
+        id: check-date
+        run: |
+          echo "::set-output name=not_yet::$(echo '${{ github.event.issue.body }}' | grep -q 'Not yet' && echo 'true' || echo 'false')"
+      - name: Comment on issue
+        if: steps.check-date.outputs.not_yet == 'true'
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issueComment = {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `Hey @${context.issue.user.login}✨,\n\nThank you for your interest in Open Source Friday! Please remember to book a date and time for the stream at the following link: https://calendar.app.google/7fdFRJ7G1jeAM5Vy8 \n\nTalk soon,\nKedasha`
+            };                      github.rest.issues.createComment(issueComment);
