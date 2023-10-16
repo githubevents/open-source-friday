@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Extract date and GitHub handle from issue body
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
         id: extract-date-and-handle
         run: |
-          DATE=$(echo '${{ github.event.issue.body }}' | grep -oP '\d{4}-\d{2}-\d{2}')
-          HANDLE=$(echo '${{ github.event.issue.body }}' | grep -oP '@\w+')
+          DATE=$(echo '$ISSUE_BODY' | grep -oP '\d{4}-\d{2}-\d{2}')
+          HANDLE=$(echo '$ISSUE_BODY' | grep -oP '@\w+')
           echo "::set-output name=date::$DATE"
           echo "::set-output name=handle::$HANDLE"
       - name: Wait until one day before date
