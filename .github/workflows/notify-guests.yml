@@ -10,8 +10,10 @@ jobs:
     steps:
       - name: Check if stream date is not yet scheduled
         id: check-date
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          echo "::set-output name=not_yet::$(echo '${{ github.event.issue.body }}' | grep -q 'Not yet' && echo 'true' || echo 'false')"
+          echo "::set-output name=not_yet::$(echo '$ISSUE_BODY' | grep -q 'Not yet' && echo 'true' || echo 'false')"
       - name: Comment on issue
         if: steps.check-date.outputs.not_yet == 'true'
         uses: actions/github-script@v5
