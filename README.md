@@ -1,10 +1,10 @@
 
-![Open Source Friday Banner](/admin/stream-assets/open-source-friday-banner.png)
+![OSF](https://github.com/githubevents/open-source-friday/assets/20666190/5e4ba779-0a2e-4e39-99a5-445078459f2d)
+## Open Source Friday - Live Stream Event ✨
+_Every Friday at 1 PM EST_
 
-## Open Source Friday - Livestream ✨
+Join [Andrea Griffiths](https://www.instagram.com/alacolombiadev/) and [Kedasha Kerr](https://www.instagram.com/itsthatlady.dev/) for Open Source Friday, where we dive into engaging discussions with maintainers from some of GitHub's most popular projects. Interested in participating? Start by submitting an issue using our [guest invite template](https://github.com/githubevents/open-source-friday/issues/new?template=osf-guest-invite.yml&assignees=AndreaGriffiths11%2CLadyKerr&labels=open-source%2Copen-source-friday%2Cpending%2Ctwitch).
 
-_weekly on Fridays at 1pm EST_
+Don't miss this chance to explore the world of Open Source every Friday. We're live on [Twitch](https://www.twitch.tv/github), and you can catch up on previous sessions on our [YouTube playlist](https://www.youtube.com/playlist?list=PL0lo9MOBetEFmtstItnKlhJJVmMghxc0P). Join the community and expand your Open Source knowledge!
 
-Join us on Fridays to learn about Open Source from Maintainers of the most popular projects on GitHub!
 
-We stream live on **https://www.twitch.tv/github** you can also watch past recordings on [Youtube](https://www.youtube.com/playlist?list=PL0lo9MOBetEFmtstItnKlhJJVmMghxc0P). 
