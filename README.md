@@ -1,5 +1,8 @@
 
-![OSF](https://github.com/githubevents/open-source-friday/assets/20666190/5e4ba779-0a2e-4e39-99a5-445078459f2d)
+![OSF Thumbnails](https://github.com/githubevents/open-source-friday/assets/20666190/7c9b074d-4b77-43ca-818c-93b7184eb3b4)
+
+
+
 ## Open Source Friday - Live Stream Event ✨
 _Every Friday at 1 PM EST_
 
