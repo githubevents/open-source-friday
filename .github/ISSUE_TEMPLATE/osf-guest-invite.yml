@@ -1,5 +1,5 @@
-name: OSF Guest Invite Issue
-description: Use this form to invite a guest to Open Source Friday or have guests submit their information.
+name: Open Source Friday Guest Request
+description: Complete this form to request to be a guest on Open Source Friday
 title: Open Source Friday - [PROJECT NAME] - [MM-DD-YYYY]
 labels: ["open-source-friday", "open-source", "twitch", "pending"]
 assignees: ["LadyKerr", "AndreaGriffiths11"]
@@ -25,6 +25,13 @@ body:
       description: Your GitHub handle
       placeholder: "@LadyKerr"
 
+  - type: textarea
+    id: about_you
+    attributes:
+      label: Tell us about yourself
+      description: Please share a bit about yourself and your background
+      placeholder: "I'm a developer who..."
+
   - type: input
     id: project_name_1
     attributes:
@@ -35,7 +42,7 @@ body:
   - type: input
     id: project_repo_1
     attributes:
-      label: Project Repo
+      label: Project Repo Link
       description: The github repository of your project
       placeholder: "github.com/repo-url"
 
