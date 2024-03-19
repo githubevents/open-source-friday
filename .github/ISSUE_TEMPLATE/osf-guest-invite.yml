@@ -25,6 +25,13 @@ body:
       description: Your GitHub handle
       placeholder: "@LadyKerr"
 
+  - type: textarea
+    id: about_you
+    attributes:
+      label: Tell us about yourself
+      description: Please share a bit about yourself and your background
+      placeholder: "I'm a developer who..."
+
   - type: input
     id: project_name_1
     attributes:
@@ -35,7 +42,7 @@ body:
   - type: input
     id: project_repo_1
     attributes:
-      label: Project Repo
+      label: Project Repo Link
       description: The github repository of your project
       placeholder: "github.com/repo-url"
 
