@@ -3,7 +3,7 @@
 # Guía de Transmisión para Invitados
 Todas las entrevistas se transmiten en vivo en el [Canal de Twitch de GitHub](https://twitch.tv/GitHub) (usando Streamyard) y se editan para estar disponibles en YouTube como contenido compartible.
 
-[Grabaciones anteriores de OSF]([https://www.youtube.com/playlist?list=PL0lo9MOBetEFmtstItnKlhJJVmMghxc0P)](https://www.youtube.com/playlist?list=PL0lo9MOBetEFi42pe4LGeWK0sqNaErM2i)
+[Grabaciones anteriores de OSF](https://www.youtube.com/playlist?list=PL0lo9MOBetEFi42pe4LGeWK0sqNaErM2i)
 
 ## Software y Equipamiento de Grabación:
 Utilizaremos Streamyard para tran)smitir en Twitch.
