@@ -1,8 +1,8 @@
 name: Open Source Friday Guest Request
 description: Complete this form to request to be a guest on Open Source Friday
 title: Open Source Friday - [PROJECT NAME] - [MM-DD-YYYY]
-labels: ["open-source-friday", "open-source", "twitch", "pending"]
-assignees: ["LadyKerr", "AndreaGriffiths11"]
+labels: ["open-source-friday", "open-source", "twitter", "pending"]
+assignees: ["mvkaran", "yashrajnayak"]
 
 body:
   - type: markdown
@@ -16,14 +16,14 @@ body:
     attributes:
       label: Name
       description: Your name
-      placeholder: "Kedasha Kerr"
+      placeholder: "Karan MV"
 
   - type: input
     id: github_handle
     attributes:
       label: GitHub Handle
       description: Your GitHub handle
-      placeholder: "@LadyKerr"
+      placeholder: "@mvkaran"
 
   - type: textarea
     id: about_you
@@ -67,7 +67,7 @@ body:
     attributes:
       label: Twitter URL
       description: Your Twitter profile
-      placeholder: "@itsthatladydev"
+      placeholder: "@mvkaran"
 
   - type: input
     id: social_linkedin
