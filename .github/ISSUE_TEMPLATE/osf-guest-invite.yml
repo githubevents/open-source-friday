@@ -46,22 +46,6 @@ body:
       description: The github repository of your project
       placeholder: "github.com/repo-url"
 
-  - type: checkboxes
-    id: stream_date
-    attributes:
-      label: Stream Date
-      description: Did you schedule a date for your stream?
-      options:
-        - label: "Yes"
-        - label: "Not yet"
-
-  - type: input
-    id: dates_1
-    attributes:
-      label: Dates
-      description: what date did you schedule for Open Source Friday stream?
-      placeholder: MM-DD-YYYY
-
   - type: input
     id: social_twitter
     attributes:
