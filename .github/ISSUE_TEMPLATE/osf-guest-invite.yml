@@ -1,7 +1,7 @@
 name: Open Source Friday Guest Request
 description: Complete this form to request to be a guest on Open Source Friday
 title: Open Source Friday - [PROJECT NAME] - [MM-DD-YYYY]
-labels: ["open-source-friday", "open-source", "twitter", "pending"]
+labels: ["open-source-friday", "open-source", "youtube", "pending"]
 assignees: ["mvkaran", "yashrajnayak"]
 
 body:
@@ -9,7 +9,7 @@ body:
     attributes:
       value: |
         ## Open Source Friday Guest Invite Form
-        #### :sparkles: Please fill out the following information to be invited to Open Source Friday. The stream occurs weekly at 1pm EST on the [GitHub Twitch Channel](https://www.twitch.tv/github). :sparkles:
+        #### :sparkles: Please [select the date that works best for you here](https://gh.io/osf-apac-cal) and submit the following information to be invited to Open Source Friday. The stream occurs weekly at 1pm EST on the [GitHub YouTube Channel](https://www.youtube.com/github). :sparkles:
 
   - type: input
     id: name
