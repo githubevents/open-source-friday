@@ -1,6 +1,6 @@
-## Open Source Friday
+## Open Source Friday APAC
 
-We are very grateful for your interest in participating in our Open Source Friday live streaming program! This initiative aims to showcase exciting open source projects and help grow their contributor communities.
+We are very grateful for your interest in participating in our Open Source Friday APAC live streaming program! This initiative aims to showcase exciting open source projects and help grow their contributor communities.
 
 To be considered for the program, your project should meet the following criteria:
 
@@ -19,6 +19,6 @@ As a maintainer or contributor, you should be:
 2. Willing to receive and review the show notes and live streaming preparation guide.
 3. Available for a live stream scheduled at least two weeks in advance.
 
-If your project meets these criteria and you're excited to showcase your work to a global audience, we'd love to have you on the show! Please fill out the [invitation request issue](https://github.com/githubevents/open-source-friday/issues/new?template=osf-guest-invite.yml&assignees=AndreaGriffiths11%2CLadyKerr&labels=open-source%2Copen-source-friday%2Cpending%2Ctwitch) to get started.
+If your project meets these criteria and you're excited to showcase your work to a global audience, we'd love to have you on the show! Please fill out the [invitation request issue](https://github.com/githubevents/open-source-friday-apac/issues/new?template=osf-guest-invite.yml&assignees=AndreaGriffiths11%2CLadyKerr&labels=open-source%2Copen-source-friday%2Cpending) to get started.
 
 We look forward to featuring your project and helping grow your contributor community!
