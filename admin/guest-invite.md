@@ -17,4 +17,4 @@ Feel free to ping us if you have any questions or need more details on anything!
 
 Warm regards,
 
-Kedasha and Andrea
+Karan MV and Yashraj Nayak
