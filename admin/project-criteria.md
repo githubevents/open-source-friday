@@ -15,7 +15,7 @@ Additionally, projects with the following characteristics will be given preferen
 
 As a maintainer or contributor, you should be:
 
-1. Available to participate in the live stream on the designated Friday at 10am PST. We're also happy to accommodate exceptions for pre-recording sessions for certain projects.
+1. Available to participate in the live stream on the designated Friday at 4 PM IST / 6:30 PM SGT. We're also happy to accommodate exceptions for pre-recording sessions for certain projects.
 2. Willing to receive and review the show notes and live streaming preparation guide.
 3. Available for a live stream scheduled at least two weeks in advance.
 
