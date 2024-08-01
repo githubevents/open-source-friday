@@ -12,4 +12,5 @@ Here is a recording guide for streaming remotely.
 
 
 Chat soon!
-Karan and Yashraj
+
+Karan MV and Yashraj Nayak
