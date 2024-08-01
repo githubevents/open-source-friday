@@ -1,4 +1,4 @@
-Subject: Invitation to Participate in GitHub's Open Source Friday! 🚀
+Subject: Invitation to Participate in GitHub's Open Source Friday APAC! 🚀
 
 Hey [Maintainer name],
 
@@ -6,8 +6,8 @@ We’re amped up for the upcoming Open Source Friday stream and would be thrille
 
 Here’s the simple rundown on how we'll work together:
 
-1. First off, hit this [OSS Friday Calendar link](https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38jS6kHbRp2IfqBPTBnmP_z5L3A0bCMKEpcFPTTS5uOkBWE0z_2SZ422BG3Y_g0Yz9AAnq-7KS) to book a slot that works for you. 🗓️
-2. Next, pop over to our [repo](https://github.com/githubevents/open-source-friday/issues) and create an issue with what you're keen on chatting about. 📝
+1. First off, hit this [OSS Friday Calendar link](https://gh.io/osf-apac-cal) to book a slot that works for you. 🗓️
+2. Next, pop over to our [repo](https://github.com/githubevents/open-source-friday-apac/issues) and create an issue with what you're keen on chatting about. 📝
 3. Our friendly bot will nudge you to book a slot if you haven't yet, and once you do, we’ll mark your issue as "scheduled". ✅
 4. That label triggers a task list on our end, ensuring everything sails smoothly on the big day. 📋
 5. You’ll get a comment with stream instructions and other tidbits to prep you for the event. 🎥
