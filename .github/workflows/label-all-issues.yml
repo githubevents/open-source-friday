@@ -1,0 +1,107 @@
+name: Label All Issues
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Run at midnight every Sunday
+  workflow_dispatch:
+
+jobs:
+  label-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Label All Issues
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs').promises;
+            
+            async function parseYaml(filePath) {
+              const content = await fs.readFile(filePath, 'utf8');
+              const lines = content.split('\n');
+              const result = {};
+              let currentKey = null;
+              
+              for (const line of lines) {
+                const trimmedLine = line.trim();
+                if (trimmedLine === '' || trimmedLine.startsWith('#')) continue;
+                
+                if (trimmedLine.includes(':')) {
+                  [currentKey, value] = trimmedLine.split(':').map(s => s.trim());
+                  result[currentKey] = [];
+                  if (value) {
+                    result[currentKey].push(value.replace(/^['"]|['"]$/g, ''));
+                  }
+                } else if (trimmedLine.startsWith('-') && currentKey) {
+                  let value = trimmedLine.slice(1).trim();
+                  value = value.replace(/^['"]|['"]$/g, '');
+                  result[currentKey].push(value);
+                }
+              }
+              
+              return result;
+            }
+            
+            async function getIssues(octokit, owner, repo, page = 1) {
+              const response = await octokit.rest.issues.listForRepo({
+                owner: owner,
+                repo: repo,
+                state: 'all',
+                per_page: 100,
+                page: page
+              });
+              return response.data;
+            }
+            
+            async function addLabelsToIssue(octokit, owner, repo, issueNumber, labels) {
+              await octokit.rest.issues.addLabels({
+                owner: owner,
+                repo: repo,
+                issue_number: issueNumber,
+                labels: labels
+              });
+            }
+            
+            async function labelAllIssues() {
+              try {
+                console.log('Reading label rules file...');
+                const labelRules = await parseYaml('.github/label-rules.yml');
+                console.log('Parsed label rules:', JSON.stringify(labelRules, null, 2));
+                
+                let page = 1;
+                let issues;
+                do {
+                  issues = await getIssues(github, context.repo.owner, context.repo.repo, page);
+                  for (const issue of issues) {
+                    const title = issue.title.toLowerCase();
+                    const labelsToAdd = [];
+                    for (const [label, keywords] of Object.entries(labelRules)) {
+                      if (keywords.some(keyword => {
+                        if (keyword.startsWith('/') && keyword.endsWith('/')) {
+                          const regex = new RegExp(keyword.slice(1, -1), 'i');
+                          return regex.test(title);
+                        }
+                        return title.includes(keyword.toLowerCase());
+                      })) {
+                        labelsToAdd.push(label);
+                      }
+                    }
+                    if (labelsToAdd.length > 0) {
+                      await addLabelsToIssue(github, context.repo.owner, context.repo.repo, issue.number, labelsToAdd);
+                      console.log(`Added labels to issue #${issue.number}: ${labelsToAdd.join(', ')}`);
+                    } else {
+                      console.log(`No matching labels found for issue #${issue.number}`);
+                    }
+                  }
+                  page++;
+                } while (issues.length > 0);
+              } catch (error) {
+                console.error('Error in workflow:', error.message);
+                console.error('Error stack:', error.stack);
+                core.setFailed(error.message);
+              }
+            }
+
+            labelAllIssues();
