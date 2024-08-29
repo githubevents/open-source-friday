@@ -1,9 +1,8 @@
 name: Solicitud de Invitado para Open Source Viernes
 description: Complete este formulario para solicitar ser invitado en Open Source Friday
 title: Open Source Friday - [NOMBRE DEL PROYECTO] - [DD-MM-AAAA]
-labels: ["open-source-viernes", "open-source", "twitch", "pending"]
+labels: ["open-source-viernes", "open-source", "twitch", "pending", "spanish"]
 assignees: 
-  - LadyKerr
   - AndreaGriffiths11
 body:
   - type: markdown
