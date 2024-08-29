@@ -1,0 +1,69 @@
+name: Solicitud de Invitado para Open Source Viernes
+description: Complete este formulario para solicitar ser invitado en Open Source Friday
+title: Open Source Friday - [NOMBRE DEL PROYECTO] - [DD-MM-AAAA]
+labels: ["open-source-viernes", "open-source", "twitch", "pending"]
+assignees: 
+  - LadyKerr
+  - AndreaGriffiths11
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Formulario de Invitación para Invitados de Open Source Friday
+        #### :sparkles: Por favor, complete la siguiente información para ser invitado a Open Source Viernes. La fecha de la transmisión ser confirmada al aprovar el invitado :sparkles:
+  - type: input
+    id: nombre
+    attributes:
+      label: Nombre
+      description: Su nombre
+      placeholder: "Kedasha Kerr"
+  - type: input
+    id: github_user
+    attributes:
+      label: Usuario de GitHub
+      description: Su nombre de usuario en GitHub
+      placeholder: "@LadyKerr"
+  - type: textarea
+    id: acerca_de_ti
+    attributes:
+      label: Háblanos de ti
+      description: Por favor, comparte un poco sobre ti y tu experiencia
+      placeholder: "Soy un desarrollador que..."
+  - type: input
+    id: nombre_proyecto_1
+    attributes:
+      label: Nombre del Proyecto
+      description: El nombre del proyecto que te gustaría mostrar y sobre el que quieres hablar
+      placeholder: "Proyecto Increíble"
+  - type: input
+    id: repo_proyecto_1
+    attributes:
+      label: Enlace al Repositorio del Proyecto
+      description: El repositorio de GitHub de tu proyecto
+      placeholder: "github.com/url-del-repo"
+  - type: checkboxes
+    id: fecha_transmision
+    attributes:
+      label: Fecha de Transmisión
+      description: ¿Has programado una fecha para tu transmisión?
+      options:
+        - label: "Sí"
+        - label: "Aún no"
+  - type: input
+    id: social_twitter
+    attributes:
+      label: URL de Twitter
+      description: Tu perfil de Twitter
+      placeholder: "@itsthatladydev"
+  - type: input
+    id: social_linkedin
+    attributes:
+      label: URL de LinkedIn
+      description: Tu perfil de LinkedIn
+      placeholder: "linkedin.com/in/tu-perfil"
+  - type: textarea
+    id: mas_info
+    attributes:
+      label: Información Adicional
+      description: Por favor, comparte cualquier detalle adicional que quieras que sepamos sobre tu proyecto
+      placeholder: "Me gustaría hablar sobre..."
