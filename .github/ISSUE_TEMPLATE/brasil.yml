@@ -1,0 +1,105 @@
+name: Pedido de Participação no Open Source Friday Brasil
+description: Preencha este formulário para solicitar participação no Open Source Friday Brasil.
+title: Open Source Friday Brasil - [NOME DO PROJETO] - [DD-MM-YYYY]
+labels: ["open-source-friday", "open-source", "twitch", "pending"]
+assignees: ["pachicodes"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Formulário de Convite Open Source Friday Brasil
+        ✨ Por favor, preencha as informações abaixo para participar do Open Source Friday Brasil.
+        A live acontece semanalmente às 13h BRT no [canal da Twitch do GitHub](https://www.twitch.tv/githubbrasil). ✨
+
+  - type: input
+    id: name
+    attributes:
+      label: Nome
+      description: Seu nome
+      placeholder: "Kedasha Kerr"
+    validations:
+      required: true
+
+  - type: input
+    id: github_handle
+    attributes:
+      label: Usuário no GitHub
+      description: Seu usuário no GitHub
+      placeholder: "@LadyKerr"
+    validations:
+      required: true
+
+  - type: textarea
+    id: about_you
+    attributes:
+      label: Conte-nos sobre você
+      description: Compartilhe um pouco sobre você e sua trajetória
+      placeholder: "Sou uma pessoa desenvolvedora que..."
+    validations:
+      required: true
+
+  - type: input
+    id: project_name_1
+    attributes:
+      label: Nome do Projeto
+      description: Nome do projeto que você gostaria de apresentar e conversar sobre
+      placeholder: "Projeto Incrível"
+    validations:
+      required: true
+
+  - type: input
+    id: project_repo_1
+    attributes:
+      label: Link do Repositório
+      description: O repositório do seu projeto no GitHub
+      placeholder: "github.com/repo-url"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: stream_date
+    attributes:
+      label: Data da Live
+      description: Você já agendou uma data para sua live?
+      options:
+        - label: "Sim"
+        - label: "Ainda não"
+    validations:
+      required: true
+
+  - type: input
+    id: dates_1
+    attributes:
+      label: Data
+      description: Qual data você agendou para a live do Open Source Friday Brasil?
+      placeholder: DD-MM-YYYY
+    validations:
+      required: false
+
+  - type: input
+    id: social_twitter
+    attributes:
+      label: URL do Twitter
+      description: Seu perfil no Twitter
+      placeholder: "@itsthatladydev"
+    validations:
+      required: false
+
+  - type: input
+    id: social_linkedin
+    attributes:
+      label: URL do LinkedIn
+      description: Seu perfil no LinkedIn
+      placeholder: "linkedin.com/in/seu-perfil"
+    validations:
+      required: false
+
+  - type: textarea
+    id: more_info
+    attributes:
+      label: Informações Adicionais
+      description: Compartilhe qualquer outro detalhe que gostaria que soubéssemos sobre seu projeto
+      placeholder: "Gostaria de falar sobre..."
+    validations:
+      required: false
