@@ -18,17 +18,10 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies
-        run: npm install @octokit/rest
-
-      - name: Standardize Issue Titles
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_OWNER: githubevents
-          REPO_NAME: open-source-friday
+      - name: Create script file
         run: |
-          node -e '
-          const { Octokit } = require("@octokit/rest");
+          cat > standardize-titles.mjs << 'EOF'
+          import { Octokit } from '@octokit/rest';
           
           const octokit = new Octokit({
             auth: process.env.GITHUB_TOKEN
@@ -69,4 +62,14 @@ jobs:
           }
           
           updateIssues();
-          '
+          EOF
+
+      - name: Install dependencies
+        run: npm install @octokit/rest
+
+      - name: Standardize Issue Titles
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_OWNER: githubevents
+          REPO_NAME: open-source-friday
+        run: node standardize-titles.mjs
