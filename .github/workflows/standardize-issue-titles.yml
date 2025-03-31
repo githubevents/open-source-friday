@@ -1,0 +1,72 @@
+name: Standardize Issue Titles
+
+on:
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  standardize-titles:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install @octokit/rest
+
+      - name: Standardize Issue Titles
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_OWNER: githubevents
+          REPO_NAME: open-source-friday
+        run: |
+          node -e '
+          const { Octokit } = require("@octokit/rest");
+          
+          const octokit = new Octokit({
+            auth: process.env.GITHUB_TOKEN
+          });
+          
+          const issueUpdates = [
+            { number: 138, title: "Open Source Friday - Nuxt and AI - [05-23-2025]" },
+            { number: 137, title: "Open Source Friday - SupermemoryAI - [05-16-2025]" },
+            { number: 136, title: "Open Source Friday - Effection - [TBD]" },
+            { number: 135, title: "Open Source Friday - Cluecumber - [TBD]" },
+            { number: 133, title: "Open Source Friday with OSPO - Td Bank - [04-04-2025]" },
+            { number: 129, title: "Open Source Friday - supervision - [03-28-2025]" },
+            { number: 127, title: "Open Source Friday - Convex - [05-09-2025]" },
+            { number: 125, title: "Open Source Friday - Dagger AI Agents - [TBD]" },
+            { number: 117, title: "Open Source Friday - Oqtane - [04-11-2025]" },
+            { number: 116, title: "Open Source Friday - Daytona - [04-18-2025]" },
+            { number: 115, title: "Open Source Friday - Ushahidi - [TBD]" },
+            { number: 111, title: "Open Source Friday - Connecting Workers and Public AI - [TBD]" }
+          ];
+          
+          async function updateIssues() {
+            for (const issue of issueUpdates) {
+              try {
+                console.log(`Updating issue #${issue.number} with title: ${issue.title}`);
+                await octokit.issues.update({
+                  owner: process.env.REPO_OWNER,
+                  repo: process.env.REPO_NAME,
+                  issue_number: issue.number,
+                  title: issue.title
+                });
+                console.log(`Successfully updated issue #${issue.number}`);
+                // Add a short delay to avoid rate limiting
+                await new Promise(resolve => setTimeout(resolve, 1000));
+              } catch (error) {
+                console.error(`Error updating issue #${issue.number}:`, error.message);
+              }
+            }
+          }
+          
+          updateIssues();
+          '
