@@ -18,5 +18,5 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: `Hi @LadyKerr and @AndreaGriffiths11,\n\nThis stream has been scheduled. Please complete the following tasks:\n\n- [ ] Create social card\n- [ ] Create meetup link\n- [ ] Create and schedule twitch stream (Linkedin, Twitch, Youtube)\n- [ ] Schedule social media post (Twitter)\n- [ ] Send prep doc to guests\n\nYou can find the instructions in this [guide](https://github.com/githubevents/open-source-friday/blob/main/admin/guest-assets/Streaming-Guide.md).`
+                body: `Hi @LadyKerr, @AndreaGriffiths11, and @KevinCrosby,\n\nThis stream has been scheduled. Please complete the following tasks:\n\n- [ ] Create social card\n- [ ] Create meetup link\n- [ ] Create and schedule twitch stream (Linkedin, Twitch, Youtube)\n- [ ] Schedule social media post (Twitter)\n- [ ] Send prep doc to guests\n\nYou can find the instructions in this [guide](https://github.com/githubevents/open-source-friday/blob/main/admin/guest-assets/Streaming-Guide.md).`
             };                      github.rest.issues.createComment(issueComment);

@@ -4,6 +4,7 @@ title: Open Source Friday - [NOMBRE DEL PROYECTO] - [DD-MM-AAAA]
 labels: ["open-source-viernes", "open-source", "twitch", "pending", "spanish"]
 assignees: 
   - AndreaGriffiths11
+  - KevinCrosby
 body:
   - type: markdown
     attributes:

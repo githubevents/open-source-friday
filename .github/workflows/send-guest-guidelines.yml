@@ -22,6 +22,6 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: context.issue.number,
-                    body: `Hey @${githubHandle}✨,\n\nYou're officially scheduled for **Open Source Friday**! 🚀🎥. Here are some guidelines on preparing for the live stream:\n\n [Preparation Instructions](https://gist.github.com/LadyKerr/9b7d6dccde55b3f30398612d1290b7dc)\n\nLet us know if you have any questions!,\nKedasha & Andrea 👯`
+                    body: `Hey @${githubHandle}✨,\n\nYou're officially scheduled for **Open Source Friday**! 🚀🎥. Here are some guidelines on preparing for the live stream:\n\n [Preparation Instructions](https://gist.github.com/LadyKerr/9b7d6dccde55b3f30398612d1290b7dc)\n\nLet us know if you have any questions!,\nKedasha, Andrea & Kevin 👯`
                 };
                 github.rest.issues.createComment(issueComment);                      }
