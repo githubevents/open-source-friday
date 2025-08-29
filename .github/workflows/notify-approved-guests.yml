@@ -1,0 +1,35 @@
+name: Notify Approved Guests
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  notify-approved-guest:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'approved'
+    steps:
+      - name: Comment on approved issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueBody = context.payload.issue.body;
+            const githubHandleMatch = issueBody.match(/@[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}/gi);
+
+            if (githubHandleMatch && githubHandleMatch.length > 0) {
+              const rawHandle = githubHandleMatch[0].substring(1);
+              const githubHandle = rawHandle.replace(/[^a-zA-Z0-9-]/g, '');
+              
+              if (githubHandle.length >= 1 && githubHandle.length <= 39 && 
+                  !githubHandle.startsWith('-') && !githubHandle.endsWith('-') && 
+                  githubHandle.match(/^[a-zA-Z0-9-]+$/)) {
+                const issueComment = {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: 'Hey @' + githubHandle + ' thank you for submitting your project! Looks super interesting! ✨\n\nPlease select a date from this calendar: https://gh.io/osf-booking\n\nDo let me know in this issue what date you selected for the stream! 📅'
+                };
+                github.rest.issues.createComment(issueComment);
+              }
+            }
