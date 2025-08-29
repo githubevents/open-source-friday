@@ -14,55 +14,46 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issueBody = context.payload.issue.body;
-            console.log('Issue body:', issueBody);
-            
-            // More specific patterns for GitHub Handle field
-            const patterns = [
-              /### GitHub Handle\s*\n+\s*@([a-zA-Z0-9-]+)/m,  // Exact section with multiline flag
-              /GitHub Handle\s*\n+\s*@([a-zA-Z0-9-]+)/m,     // Fallback without ###
-              /### GitHub Handle\s*\n+@([a-zA-Z0-9-]+)/m,    // No space before @
-              /GitHub Handle\s*\n+@([a-zA-Z0-9-]+)/m         // Fallback no space
-            ];
-            
-            let githubHandle = null;
-            
-            for (const pattern of patterns) {
-              const match = pattern.exec(issueBody);
-              if (match) {
-                githubHandle = match[1] || match[0].substring(1);
-                console.log('Found handle with pattern:', pattern, 'Result:', githubHandle);
-                break;
-              }
-            }
-            
+            // Get the GitHub username directly from the issue author
+            const githubHandle = context.payload.issue.user.login;
+
+            console.log('Processing issue #', context.issue.number, 'by author:', githubHandle);
+
             if (githubHandle) {
-              // Sanitize the GitHub handle
-              const sanitizedHandle = githubHandle.replace(/[^a-zA-Z0-9-]/g, '');
-              
-              // Validate handle format
-              if (sanitizedHandle.length >= 1 && sanitizedHandle.length <= 39 && 
-                  !sanitizedHandle.startsWith('-') && !sanitizedHandle.endsWith('-') && 
-                  sanitizedHandle.match(/^[a-zA-Z0-9-]+$/)) {
-                
-                console.log('Creating comment for handle:', sanitizedHandle);
+              // Security: Enhanced validation function
+              const isValidGitHubHandle = (handle) => {
+                if (!handle || typeof handle !== 'string') return false;
+                if (handle.length < 1 || handle.length > 39) return false;
+
+                // Must start and end with alphanumeric, can contain hyphens in middle
+                return /^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$/.test(handle);
+              };
+
+              if (isValidGitHubHandle(githubHandle)) {
+                console.log('Creating comment for validated handle');
+
+                // Security: Sanitize comment content
+                const safeHandle = githubHandle.replace(/[<>'"&]/g, '');
+                const commentBody = 'Hey @' + safeHandle + ' thank you for submitting your project! Looks super interesting! ✨\n\nPlease select a date from this calendar: https://gh.io/osf-booking\n\nDo let me know in this issue what date you selected for the stream! 📅';
+
                 const issueComment = {
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: context.issue.number,
-                  body: 'Hey @' + sanitizedHandle + ' thank you for submitting your project! Looks super interesting! ✨\n\nPlease select a date from this calendar: https://gh.io/osf-booking\n\nDo let me know in this issue what date you selected for the stream! 📅'
+                  body: commentBody
                 };
-                
+
                 try {
                   const result = await github.rest.issues.createComment(issueComment);
-                  console.log('Comment created successfully:', result.data.id);
+                  console.log('Comment created successfully, ID:', result.data.id);
                 } catch (error) {
-                  console.error('Failed to create comment:', error);
-                  throw error;
+                  // Security: Don't expose error details in logs
+                  console.error('Failed to create comment for issue #', context.issue.number);
+                  // Don't re-throw to prevent workflow failure from exposing internals
                 }
               } else {
-                console.log('Handle validation failed for:', sanitizedHandle);
+                console.log('Handle validation failed for issue #', context.issue.number);
               }
             } else {
-              console.log('No GitHub handle found in issue body');
+              console.log('No GitHub handle found for issue #', context.issue.number);
             }
