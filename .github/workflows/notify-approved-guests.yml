@@ -17,11 +17,12 @@ jobs:
             const issueBody = context.payload.issue.body;
             console.log('Issue body:', issueBody);
             
-            // Try multiple patterns to find GitHub handle
+            // More specific patterns for GitHub Handle field
             const patterns = [
-              /### GitHub Handle\s*\n\s*@([a-zA-Z0-9-]+)/,
-              /GitHub Handle\s*\n\s*@([a-zA-Z0-9-]+)/,
-              /@[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}/gi
+              /### GitHub Handle\s*\n+\s*@([a-zA-Z0-9-]+)/m,  // Exact section with multiline flag
+              /GitHub Handle\s*\n+\s*@([a-zA-Z0-9-]+)/m,     // Fallback without ###
+              /### GitHub Handle\s*\n+@([a-zA-Z0-9-]+)/m,    // No space before @
+              /GitHub Handle\s*\n+@([a-zA-Z0-9-]+)/m         // Fallback no space
             ];
             
             let githubHandle = null;
