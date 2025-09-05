@@ -1,0 +1,109 @@
+name: Reporte de Error
+description: Reportar un error o problema con el proyecto Open Source Friday
+title: "[Error] "
+labels: ["bug", "needs-triage", "spanish"]
+assignees: ["LadyKerr", "AndreaGriffiths11", "KevinCrosby"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Reporte de Error
+        #### :bug: ¡Gracias por tomarte el tiempo de reportar un error! Por favor proporciona información detallada para ayudarnos a entender y solucionar el problema. :bug:
+
+  - type: textarea
+    id: descripcion_error
+    attributes:
+      label: Descripción del Error
+      description: Una descripción clara y concisa de cuál es el error
+      placeholder: "Describe el error que encontraste..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: pasos_reproducir
+    attributes:
+      label: Pasos para Reproducir
+      description: Pasos para reproducir el comportamiento
+      placeholder: |
+        1. Ve a '...'
+        2. Haz clic en '....'
+        3. Desplázate hacia abajo a '....'
+        4. Ver error
+    validations:
+      required: true
+
+  - type: textarea
+    id: comportamiento_esperado
+    attributes:
+      label: Comportamiento Esperado
+      description: Una descripción clara y concisa de lo que esperabas que pasara
+      placeholder: "¿Qué debería haber pasado en su lugar?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: comportamiento_actual
+    attributes:
+      label: Comportamiento Actual
+      description: Una descripción clara y concisa de lo que realmente pasó
+      placeholder: "¿Qué pasó realmente?"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area_afectada
+    attributes:
+      label: Área Afectada
+      description: ¿Qué parte del proyecto Open Source Friday está afectada?
+      options:
+        - Sitio Web/Documentación
+        - Proceso de Transmisión en Vivo
+        - Flujos de Trabajo de GitHub/Automatización
+        - Proceso de Invitación de Invitados
+        - Plantillas de Issues
+        - Otro
+    validations:
+      required: true
+
+  - type: textarea
+    id: entorno
+    attributes:
+      label: Entorno
+      description: Por favor proporciona detalles relevantes del entorno
+      placeholder: |
+        - Navegador: [ej. Chrome, Firefox, Safari]
+        - Sistema Operativo: [ej. Windows, macOS, Linux]
+        - Dispositivo: [ej. Escritorio, Móvil, Tablet]
+        - Cualquier otro detalle técnico relevante
+    validations:
+      required: false
+
+  - type: textarea
+    id: capturas_logs
+    attributes:
+      label: Capturas de Pantalla o Logs
+      description: Si aplica, agrega capturas de pantalla o logs de error para ayudar a explicar tu problema
+      placeholder: "Pega capturas de pantalla o logs aquí..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: contexto_adicional
+    attributes:
+      label: Contexto Adicional
+      description: Agrega cualquier otro contexto sobre el problema aquí
+      placeholder: "Cualquier información adicional que pueda ser útil..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: lista_verificacion
+    attributes:
+      label: Lista de Verificación
+      description: Por favor confirma lo siguiente
+      options:
+        - label: He buscado en los issues existentes para asegurarme de que este error no haya sido reportado ya
+          required: true
+        - label: He proporcionado toda la información solicitada arriba
+          required: true
