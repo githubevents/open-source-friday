@@ -1,3 +1,14 @@
+bug:
+  - '/^\[Bug\]/'
+  - '/^\[Error\]/'
+  - bug
+  - error
+  - issue
+  - problem
+  - broken
+needs-triage:
+  - '/^\[Bug\]/'
+  - '/^\[Error\]/'
 January:
   - '/\d{4}-01-\d{2}/'
 February:
