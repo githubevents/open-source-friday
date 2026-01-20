@@ -1,9 +1,9 @@
 name: Guest Welcome Bot
 
 on:
-  issues:
+  issues: 
     types: [labeled]
-  workflow_dispatch:
+  workflow_dispatch: 
     inputs: 
       issue_number:
         description: 'Issue number to test with'
@@ -12,7 +12,7 @@ on:
 
 jobs:
   generate-prep: 
-    if: github.event.label.name == 'scheduled' || github.event_name == 'workflow_dispatch'
+    if: github. event.label.name == 'scheduled' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
             let issue;
             if (context.eventName === 'workflow_dispatch') {
               issueNumber = ${{ github.event.inputs.issue_number || 0 }};
-              const response = await github.rest.issues. get({
+              const response = await github.rest. issues.get({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issueNumber
@@ -50,135 +50,141 @@ jobs:
             core.setOutput('issue_body', issue.body || '');
             core.setOutput('issue_url', issue.html_url);
 
-      - name: Parse issue and generate welcome message
-        id: personalize
+      - name: Parse issue data
+        id: parse
         env:
-          GH_TOKEN: ${{ secrets. COPILOT_PAT }}
           ISSUE_BODY: ${{ steps.get-issue.outputs.issue_body }}
         run: |
-          cat > script1.mjs << 'EOF'
+          cat > parse.mjs << 'ENDSCRIPT'
           import { appendFileSync } from 'fs';
-
           const body = process.env.ISSUE_BODY || '';
-
           const nameMatch = body.match(/### Name\s*\n\s*([^\n]+)/i);
           const handleMatch = body. match(/### GitHub Handle\s*\n\s*@? ([^\n\s]+)/i);
           const projectMatch = body.match(/### Project Name\s*\n\s*([^\n]+)/i);
-          const repoMatch = body.match(/### Project Repo Link\s*\n\s*(https:\/\/github\.com\/[^\s]+)/i);
+          const repoMatch = body.match(/### Project Repo Link\s*\n\s*(https:\/\/github\. com\/[^\s]+)/i);
           const descMatch = body.match(/### Tell us about yourself\s*\n\s*([\s\S]*?)(?=\n###|$)/i);
-
-          let guestName = nameMatch ? nameMatch[1]. trim() : 'Guest';
+          let guestName = nameMatch ?  nameMatch[1].trim() : 'Guest';
           let handle = handleMatch ? handleMatch[1].trim().replace(/^@/, '') : '';
           const projectName = projectMatch ? projectMatch[1].trim() : '';
-          const projectRepo = repoMatch ? repoMatch[1]. trim() : '';
-          const guestBackground = descMatch ? descMatch[1].trim() : '';
-
-          if (!handle && projectRepo) {
-            const repoUserMatch = projectRepo.match(/github\. com\/([^\/]+)/);
+          const projectRepo = repoMatch ? repoMatch[1].trim() : '';
+          const guestBackground = descMatch ? descMatch[1]. trim() : '';
+          if (! handle && projectRepo) {
+            const repoUserMatch = projectRepo.match(/github\.com\/([^\/]+)/);
             if (repoUserMatch) {
               handle = repoUserMatch[1];
               console.log('Extracted handle from repo URL:', handle);
             }
           }
-
           console.log('=== PARSED ISSUE DATA ===');
           console.log('Guest Name:', guestName);
-          console.log('Handle:', handle);
+          console. log('Handle:', handle);
           console.log('Project:', projectName);
-          console. log('Repo:', projectRepo);
-
-          let personalizedMessage = '';
-          let client = null;
-
-          try {
-            const { CopilotClient } = await import('@github/copilot-sdk');
-            
-            console.log('Initializing Copilot SDK.. .');
-            client = new CopilotClient();
-            
-            const prompt = `You are writing on behalf of the Open Source Friday team—a group of developer advocates at GitHub who host a weekly livestream featuring open source maintainers. 
-
-          The team's vibe: 
-          - Genuinely curious about open source
-          - Supportive and encouraging to guests
-          - Technically-minded but approachable
-          - Excited without being over-the-top
-
-          Guest details: 
-          - Name: ${guestName}
-          - Project: ${projectName || 'their project'}
-          - Repo: ${projectRepo}
-          - About them: ${guestBackground}
-
-          Write a 2-3 sentence welcome message that: 
-          1. Greets them by name
-          2. Shows we actually looked at their project (mention something specific if possible)
-          3. Expresses genuine excitement about what they will share
-
-          Sign off as "The Open Source Friday Team" but do not include a formal greeting like "Dear" or "Hi". 
-
-          Keep it natural and conversational.  No emojis. No markdown.  Plain text only.`;
-
-            await client.start();
-            console. log('Creating session...');
-            const session = await client.createSession({ model: 'gpt-4' });
-            
-            console.log('Sending prompt to Copilot...');
-            const response = await session.sendAndWait({ prompt });
-
-            if (response && response.data && response. data.content) {
-              personalizedMessage = response.data.content;
-              console.log('Received personalized message from Copilot');
-            }
-
-            try { await session.destroy(); } catch (e) { }
-            try { await client.stop(); } catch (e) { }
-            
-          } catch (error) {
-            console.error('Copilot SDK error:', error.message);
-          }
-
-          if (! personalizedMessage) {
-            console.log('Using fallback message');
-            if (projectName && guestBackground && guestBackground !== '_No response_') {
-              personalizedMessage = guestName + ', we are excited to have you on Open Source Friday! ' + projectName + ' sounds like a fantastic project, and we cannot wait to hear more about your journey building it.  Our audience is going to love learning from your experience.\n\nThe Open Source Friday Team';
-            } else if (projectName) {
-              personalizedMessage = guestName + ', welcome to Open Source Friday! We are thrilled to have you joining us to talk about ' + projectName + '. This is going to be a great session.\n\nThe Open Source Friday Team';
-            } else {
-              personalizedMessage = guestName + ', welcome to Open Source Friday! We are excited to have you joining us. This is going to be a fantastic session.\n\nThe Open Source Friday Team';
-            }
-          }
-
-          const outputFile = process.env.GITHUB_OUTPUT;
-          appendFileSync(outputFile, 'personalized_message<<EOFMSG\n' + personalizedMessage + '\nEOFMSG\n');
+          console.log('Repo:', projectRepo);
+          const outputFile = process.env. GITHUB_OUTPUT;
           appendFileSync(outputFile, 'guest_name=' + guestName + '\n');
           appendFileSync(outputFile, 'handle=' + handle + '\n');
           appendFileSync(outputFile, 'project_name=' + projectName + '\n');
           appendFileSync(outputFile, 'project_repo=' + projectRepo + '\n');
+          const bg = guestBackground. replace(/\n/g, ' ').substring(0, 500);
+          appendFileSync(outputFile, 'guest_background=' + bg + '\n');
+          console.log('Outputs written successfully');
+          ENDSCRIPT
+          node parse.mjs
 
+      - name: Generate welcome message with Copilot
+        id:  personalize
+        env:
+          GH_TOKEN: ${{ secrets.COPILOT_PAT }}
+          GUEST_NAME:  ${{ steps.parse.outputs. guest_name }}
+          HANDLE: ${{ steps.parse.outputs.handle }}
+          PROJECT_NAME: ${{ steps.parse.outputs.project_name }}
+          PROJECT_REPO: ${{ steps. parse.outputs.project_repo }}
+          GUEST_BACKGROUND:  ${{ steps.parse.outputs. guest_background }}
+        run:  |
+          cat > copilot.mjs << 'ENDSCRIPT'
+          import { appendFileSync } from 'fs';
+          const guestName = process.env.GUEST_NAME || 'Guest';
+          const projectName = process.env.PROJECT_NAME || '';
+          const projectRepo = process.env.PROJECT_REPO || '';
+          const guestBackground = process.env.GUEST_BACKGROUND || '';
+          console.log('=== GENERATING WELCOME MESSAGE ===');
+          console.log('Guest:', guestName);
+          console.log('Project:', projectName);
+          let personalizedMessage = '';
+          try {
+            const { CopilotClient } = await import('@github/copilot-sdk');
+            console.log('Initializing Copilot SDK...');
+            const client = new CopilotClient();
+            const promptLines = [
+              'You are writing on behalf of the Open Source Friday team—a group of developer advocates at GitHub who host a weekly livestream featuring open source maintainers.',
+              '',
+              'The team vibe:  Genuinely curious about open source, supportive and encouraging to guests, technically-minded but approachable, excited without being over-the-top.',
+              '',
+              'Guest details:',
+              '- Name:  ' + guestName,
+              '- Project: ' + (projectName || 'their project'),
+              '- Repo: ' + projectRepo,
+              '- About them: ' + guestBackground,
+              '',
+              'Write a 2-3 sentence welcome message that:',
+              '1. Greets them by name',
+              '2. Shows we actually looked at their project (mention something specific if possible)',
+              '3. Expresses genuine excitement about what they will share',
+              '',
+              'Sign off as "The Open Source Friday Team" but do not include a formal greeting like "Dear" or "Hi".',
+              '',
+              'Keep it natural and conversational. No emojis. No markdown. Plain text only.'
+            ];
+            const prompt = promptLines.join('\n');
+            await client.start();
+            console. log('Creating session...');
+            const session = await client.createSession({ model: 'gpt-4' });
+            console.log('Sending prompt to Copilot...');
+            const response = await session.sendAndWait({ prompt });
+            if (response && response.data && response.data. content) {
+              personalizedMessage = response.data.content;
+              console.log('Received personalized message from Copilot');
+            }
+            try { await session.destroy(); } catch (e) { }
+            try { await client.stop(); } catch (e) { }
+          } catch (error) {
+            console.error('Copilot SDK error:', error.message);
+          }
+          if (!personalizedMessage) {
+            console.log('Using fallback message');
+            if (projectName) {
+              personalizedMessage = guestName + ', we are excited to have you on Open Source Friday! ' + projectName + ' sounds like a fantastic project, and we cannot wait to hear more about your journey building it.  Our audience is going to love learning from your experience.\n\nThe Open Source Friday Team';
+            } else {
+              personalizedMessage = guestName + ', welcome to Open Source Friday! We are excited to have you joining us.  This is going to be a fantastic session.\n\nThe Open Source Friday Team';
+            }
+          }
+          const outputFile = process.env.GITHUB_OUTPUT;
+          appendFileSync(outputFile, 'personalized_message<<EOFMSG\n' + personalizedMessage + '\nEOFMSG\n');
           console.log('Welcome message generated successfully');
-
           await new Promise(function(resolve) { setTimeout(resolve, 3000); });
-          EOF
-          node script1.mjs || true
+          ENDSCRIPT
+          node copilot.mjs || true
 
       - name: Generate thumbnail
         id: thumbnail
         env:
-          GUEST_NAME: ${{ steps.personalize.outputs.guest_name }}
-          HANDLE: ${{ steps.personalize.outputs.handle }}
-          PROJECT_REPO: ${{ steps.personalize.outputs.project_repo }}
-          PROJECT_NAME: ${{ steps.personalize.outputs.project_name }}
+          GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
+          HANDLE: ${{ steps.parse. outputs.handle }}
+          PROJECT_REPO: ${{ steps.parse.outputs.project_repo }}
+          PROJECT_NAME: ${{ steps.parse.outputs.project_name }}
         run: |
-          cat > script2.mjs << 'EOF'
+          cat > thumbnail.mjs << 'ENDSCRIPT'
           import puppeteer from 'puppeteer';
           import { appendFileSync, writeFileSync } from 'fs';
-
           const guestName = process.env. GUEST_NAME || 'Guest';
           let handle = process.env.HANDLE || '';
           const projectRepo = process.env.PROJECT_REPO || '';
           const projectName = process.env.PROJECT_NAME || '';
-
+          console. log('=== THUMBNAIL GENERATION ===');
+          console.log('Guest:', guestName);
+          console.log('Handle:', handle);
+          console.log('Project:', projectName);
+          console. log('Repo:', projectRepo);
           if (!handle && projectRepo) {
             const repoMatch = projectRepo.match(/github\. com\/([^\/]+)/);
             if (repoMatch) {
@@ -186,56 +192,40 @@ jobs:
               console.log('Extracted handle from repo URL:', handle);
             }
           }
-
           if (!handle) {
-            console. log('No GitHub handle available - skipping thumbnail generation');
-            appendFileSync(process.env. GITHUB_OUTPUT, 'thumbnail_generated=false\n');
+            console.log('No GitHub handle available - skipping thumbnail generation');
+            appendFileSync(process.env.GITHUB_OUTPUT, 'thumbnail_generated=false\n');
             process.exit(0);
           }
-
-          console.log('=== THUMBNAIL GENERATION ===');
-          console. log('Guest:', guestName);
-          console. log('Handle:', handle);
-          console.log('Project:', projectName);
-          console.log('Repo:', projectRepo);
-
           const browser = await puppeteer.launch({
             headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
           });
-
           try {
             const page = await browser.newPage();
             await page.setViewport({ width: 1400, height: 900 });
-
             page.on('console', function(msg) {
-              if (msg.type() === 'error') {
+              if (msg. type() === 'error') {
                 console.log('PAGE ERROR:', msg.text());
               }
             });
-
             console.log('Loading thumbnail generator...');
             await page.goto('https://andreagriffiths11.github.io/thumbnail-gen/', {
               waitUntil:  'networkidle0',
               timeout: 60000
             });
-
             console.log('Page loaded successfully');
-
             console.log('Filling guest name:', guestName);
             await page.evaluate(function() { document.getElementById('guestName').value = ''; });
             await page.type('#guestName', guestName);
-
             console.log('Filling username:', handle);
-            await page. evaluate(function() { document.getElementById('username').value = ''; });
+            await page.evaluate(function() { document.getElementById('username').value = ''; });
             await page.type('#username', handle);
-
             if (projectRepo) {
               console.log('Filling repo:', projectRepo);
               await page.evaluate(function() { document.getElementById('repo').value = ''; });
               await page.type('#repo', projectRepo);
             }
-
             if (projectName) {
               const hasProjectName = await page.$('#projectName');
               if (hasProjectName) {
@@ -244,73 +234,59 @@ jobs:
                 await page.type('#projectName', projectName);
               }
             }
-
             console. log('Clicking generate button...');
-            await page. click('#generateBtn');
-
+            await page.click('#generateBtn');
             console.log('Waiting for thumbnail generation...');
-
             let attempts = 0;
             const maxAttempts = 30;
             let isReady = false;
-
-            while (attempts < maxAttempts && ! isReady) {
+            while (attempts < maxAttempts && !isReady) {
               await new Promise(function(resolve) { setTimeout(resolve, 2000); });
-
-              const status = await page.evaluate(function() {
+              const status = await page. evaluate(function() {
                 const downloadBtn = document.getElementById('downloadBtn');
                 const banner = document.getElementById('banner');
                 return {
-                  downloadDisabled: downloadBtn ?  downloadBtn.disabled : true,
+                  downloadDisabled:  downloadBtn ? downloadBtn.disabled :  true,
                   bannerText: banner ? banner.textContent :  '',
-                  bannerClass: banner ? banner.className : ''
+                  bannerClass:  banner ? banner.className : ''
                 };
               });
-
-              console.log('Attempt ' + (attempts + 1) + '/' + maxAttempts + ': Download disabled=' + status.downloadDisabled);
-
+              console.log('Attempt ' + (attempts + 1) + '/' + maxAttempts + ':  Download disabled=' + status.downloadDisabled);
               if (! status.downloadDisabled) {
                 isReady = true;
                 console.log('Thumbnail generation complete!');
-              } else if (status.bannerClass. includes('error')) {
+              } else if (status.bannerClass.includes('error')) {
                 throw new Error('Thumbnail generation failed:  ' + status.bannerText);
               }
-
               attempts++;
             }
-
-            if (!isReady) {
+            if (! isReady) {
               throw new Error('Thumbnail generation timed out');
             }
-
             await new Promise(function(resolve) { setTimeout(resolve, 1000); });
-
             console.log('Extracting canvas data...');
             const thumbnailData = await page.evaluate(function() {
               const canvas = document. getElementById('preview');
               return canvas.toDataURL('image/png');
             });
-
             const base64Data = thumbnailData.replace(/^data:image\/png;base64,/, '');
             writeFileSync('thumbnail.png', Buffer.from(base64Data, 'base64'));
-
             console. log('Thumbnail saved successfully! ');
-            appendFileSync(process.env.GITHUB_OUTPUT, 'thumbnail_generated=true\n');
-
+            appendFileSync(process.env. GITHUB_OUTPUT, 'thumbnail_generated=true\n');
           } catch (error) {
             console.error('Error generating thumbnail:', error. message);
             appendFileSync(process.env.GITHUB_OUTPUT, 'thumbnail_generated=false\n');
           } finally {
-            await browser. close();
+            await browser.close();
           }
-          EOF
-          node script2.mjs
+          ENDSCRIPT
+          node thumbnail.mjs
 
       - name: Upload thumbnail artifact
         if: steps.thumbnail.outputs.thumbnail_generated == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name:  thumbnail-issue-${{ steps.get-issue.outputs.issue_number }}
+          name: thumbnail-issue-${{ steps.get-issue.outputs.issue_number }}
           path: thumbnail.png
           retention-days: 90
 
@@ -318,10 +294,10 @@ jobs:
         uses: actions/github-script@v7
         env:
           PERSONALIZED_MESSAGE: ${{ steps. personalize.outputs.personalized_message }}
-          GUEST_NAME: ${{ steps.personalize.outputs.guest_name }}
-          HANDLE: ${{ steps.personalize.outputs.handle }}
+          GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
+          HANDLE: ${{ steps. parse.outputs.handle }}
           ISSUE_NUMBER: ${{ steps.get-issue.outputs.issue_number }}
-          THUMBNAIL_GENERATED: ${{ steps. thumbnail.outputs.thumbnail_generated }}
+          THUMBNAIL_GENERATED: ${{ steps.thumbnail. outputs.thumbnail_generated }}
           RUN_ID: ${{ github.run_id }}
         with:
           script: |
@@ -335,9 +311,7 @@ jobs:
             const guideUrl = repoUrl + '/blob/main/admin/approved-guest. md';
             const thumbnailToolUrl = 'https://andreagriffiths11.github. io/thumbnail-gen/';
             const artifactUrl = repoUrl + '/actions/runs/' + runId;
-
             const mention = handle ? '@' + handle : guestName;
-
             let commentParts = [
               '## Welcome to Open Source Friday!  🎉',
               '',
@@ -346,19 +320,18 @@ jobs:
               '---',
               ''
             ];
-
             if (thumbnailGenerated) {
               commentParts = commentParts.concat([
                 '### 🖼️ Your Promotional Thumbnail',
                 '',
-                '✅ Your custom thumbnail has been generated!',
+                '✅ Your custom thumbnail has been generated! ',
                 '',
                 '**To download it:**',
                 '1. [Click here to view the workflow run](' + artifactUrl + ')',
                 '2. Scroll down to **Artifacts**',
                 '3. Download `thumbnail-issue-' + issueNumber + '`',
                 '',
-                'Use this thumbnail to promote your upcoming stream on social media!',
+                'Use this thumbnail to promote your upcoming stream on social media! ',
                 '',
                 '> 💡 Want to customize it? Use our [thumbnail generator](' + thumbnailToolUrl + ').',
                 '',
@@ -375,7 +348,6 @@ jobs:
                 ''
               ]);
             }
-
             commentParts = commentParts.concat([
               '### ✅ Quick Prep Checklist',
               '',
@@ -390,14 +362,11 @@ jobs:
               '',
               '— The Open Source Friday Team'
             ]);
-
             const comment = commentParts.join('\n');
-
-            await github.rest.issues. createComment({
+            await github.rest. issues.createComment({
               issue_number: issueNumber,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: comment
             });
-
             console.log('Comment posted successfully!');
