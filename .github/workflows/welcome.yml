@@ -10,9 +10,9 @@ on:
         required: true
         type: number
 
-jobs:
+jobs: 
   generate-prep:
-    if: github.event.label.name == 'scheduled' || github.event_name == 'workflow_dispatch'
+    if: github.event.label. name == 'scheduled' || github.event_name == 'workflow_dispatch'
     runs-on:  ubuntu-latest
 
     steps: 
@@ -31,30 +31,27 @@ jobs:
 
       - name: Get issue data
         id: get-issue
-        uses: actions/github-script@v7
+        uses:  actions/github-script@v7
         with:
-          script: |
+          script:  |
             let issueNumber;
             let issue;
 
             if (context.eventName === 'workflow_dispatch') {
-              // Manual trigger - fetch the issue
               issueNumber = ${{ github.event.inputs.issue_number }};
-              const response = await github.rest.issues.get({
+              const response = await github. rest.issues.get({
                 owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issueNumber
+                repo: context.repo. repo,
+                issue_number:  issueNumber
               });
               issue = response.data;
             } else {
-              // Label trigger - use the payload
               issue = context.payload.issue;
               issueNumber = issue.number;
             }
 
-            core.setOutput('issue_number', issueNumber);
-            core.setOutput('issue_body', issue.body || '');
-            core.setOutput('issue_url', issue.html_url);
+            core. setOutput('issue_number', issueNumber);
+            core.setOutput('issue_body', issue. body || '');
 
       - name: Generate personalized prep
         id: personalize
@@ -69,8 +66,8 @@ jobs:
             const body = process.env.ISSUE_BODY || '';
 
             const nameMatch = body.match(/Name\s*\n\s*([^\n]+)/);
-            const projectMatch = body. match(/Project Name\s*\n\s*([^\n]+)/);
-            const repoMatch = body. match(/Project Repo Link\s*\n\s*([^\n]+)/);
+            const projectMatch = body.match(/Project Name\s*\n\s*([^\n]+)/);
+            const repoMatch = body.match(/Project Repo Link\s*\n\s*([^\n]+)/);
             const descMatch = body.match(/Tell us about yourself\s*\n\s*([\s\S]*?)(?=\n###|\n##|$)/);
 
             const guestName = nameMatch ? nameMatch[1].trim() : 'Guest';
@@ -78,14 +75,20 @@ jobs:
             const projectRepo = repoMatch ? repoMatch[1]. trim() : '';
             const guestBackground = descMatch ? descMatch[1].trim() : '';
 
-            const prompt = `You are a helpful stream coordinator for Open Source Friday.  Create a 2-3 sentence personalized welcome message for this guest: 
-
-Guest Name: ${guestName}
-Project:  ${projectName}
-Project Repo: ${projectRepo}
-Guest Background: ${guestBackground}
-
-Write a warm, encouraging message that acknowledges their specific project and shows genuine excitement to have them on the stream.  Keep it concise and authentic. Do not use markdown formatting or special characters. `;
+            const prompt = [
+              'You are a helpful stream coordinator for Open Source Friday.',
+              'Create a 2-3 sentence personalized welcome message for this guest:',
+              '',
+              'Guest Name: ' + guestName,
+              'Project:  ' + projectName,
+              'Project Repo: ' + projectRepo,
+              'Guest Background: ' + guestBackground,
+              '',
+              'Write a warm, encouraging message that acknowledges their specific project.',
+              'Show genuine excitement to have them on the stream.',
+              'Keep it concise and authentic.',
+              'Do not use markdown formatting or special characters.'
+            ]. join('\n');
 
             let personalizedMessage = '';
             let client;
@@ -106,12 +109,12 @@ Write a warm, encouraging message that acknowledges their specific project and s
               await session.destroy();
 
             } catch (error) {
-              console.log(`Copilot SDK error: ${error.message}`);
-              personalizedMessage = `We're thrilled to have ${guestName} joining us to talk about ${projectName}!  This is going to be a fantastic session. `;
+              console.log('Copilot SDK error:  ' + error.message);
+              personalizedMessage = 'We are thrilled to have ' + guestName + ' joining us to talk about ' + projectName + '! This is going to be a fantastic session. ';
 
             } finally {
               if (client) {
-                await client.stop().catch(e => console.log('Cleanup error:', e.message));
+                await client.stop().catch(function(e) { console.log('Cleanup error:', e.message); });
               }
             }
 
@@ -119,35 +122,38 @@ Write a warm, encouraging message that acknowledges their specific project and s
             core.setOutput('guest_name', guestName);
 
       - name: Post personalized prep comment
-        uses: actions/github-script@v7
+        uses:  actions/github-script@v7
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PERSONALIZED_MESSAGE: ${{ steps.personalize.outputs.personalized_message }}
+          GITHUB_TOKEN: ${{ secrets. GITHUB_TOKEN }}
+          PERSONALIZED_MESSAGE: ${{ steps. personalize.outputs.personalized_message }}
           GUEST_NAME:  ${{ steps.personalize.outputs.guest_name }}
-          ISSUE_NUMBER: ${{ steps.get-issue.outputs.issue_number }}
-        with: 
+          ISSUE_NUMBER: ${{ steps. get-issue.outputs.issue_number }}
+        with:
           script: |
-            const personalizedMessage = process.env. PERSONALIZED_MESSAGE;
+            const personalizedMessage = process.env.PERSONALIZED_MESSAGE;
             const guestName = process.env. GUEST_NAME;
             const issueNumber = parseInt(process.env.ISSUE_NUMBER, 10);
-            const guideUrl = `${context.payload.repository.html_url}/blob/main/admin/approved-guest.md`;
+            const repoUrl = context.payload.repository.html_url;
+            const guideUrl = repoUrl + '/blob/main/admin/approved-guest.md';
 
-            const comment = `## Welcome to Open Source Friday!  🎉
-
-${personalizedMessage}
-
-### Quick Prep Checklist
-- Stream starts at **1:00 PM ET** on your scheduled Friday
-- Please join at **12:45 PM ET** for tech checks
-- Have your demo ready to go (live demos are our audience's favorite!)
-
-📖 For full preparation guidelines and expectations, see our [complete guest guide](${guideUrl}).
-
-Looking forward to your session! `;
+            const comment = [
+              '## Welcome to Open Source Friday!  🎉',
+              '',
+              personalizedMessage,
+              '',
+              '### Quick Prep Checklist',
+              '- Stream starts at **1:00 PM ET** on your scheduled Friday',
+              '- Please join at **12:45 PM ET** for tech checks',
+              '- Have your demo ready to go (live demos are our audience favorite!)',
+              '',
+              'For full preparation guidelines and expectations, see our [complete guest guide](' + guideUrl + ').',
+              '',
+              'Looking forward to your session!'
+            ].join('\n');
 
             await github.rest.issues.createComment({
               issue_number: issueNumber,
               owner: context.repo.owner,
-              repo: context.repo.repo,
+              repo: context.repo. repo,
               body: comment
             });
