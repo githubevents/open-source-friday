@@ -1,7 +1,7 @@
 name: Guest Welcome Bot
 
 on: 
-  issues:
+  issues: 
     types:  [labeled]
   workflow_dispatch:
     inputs:
@@ -22,23 +22,23 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version:  '22'
+          node-version: '22'
 
-      - name:  Install Copilot CLI and SDK
+      - name: Install Copilot CLI and SDK
         run: |
           npm install -g @github/copilot
           npm install @github/copilot-sdk
 
       - name: Get issue data
         id: get-issue
-        uses:  actions/github-script@v7
+        uses: actions/github-script@v7
         with:
-          script:  |
+          script: |
             let issueNumber;
             let issue;
 
             if (context.eventName === 'workflow_dispatch') {
-              issueNumber = ${{ github.event.inputs.issue_number || 0 }};
+              issueNumber = ${{ github. event.inputs.issue_number || 0 }};
               const response = await github.rest.issues.get({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -46,8 +46,8 @@ jobs:
               });
               issue = response.data;
             } else {
-              issue = context.payload.issue;
-              issueNumber = issue. number;
+              issue = context.payload. issue;
+              issueNumber = issue.number;
             }
 
             core.setOutput('issue_number', issueNumber);
@@ -56,18 +56,19 @@ jobs:
       - name: Generate personalized prep
         id: personalize
         env:
-          GH_TOKEN:  ${{ secrets.COPILOT_PAT }}
-          ISSUE_BODY: ${{ steps. get-issue.outputs.issue_body }}
+          GH_TOKEN: ${{ secrets.COPILOT_PAT }}
+          ISSUE_BODY: ${{ steps.get-issue.outputs.issue_body }}
         run: |
-          cat << 'EOF' > generate-welcome. mjs
+          cat << 'SCRIPT' > generate-welcome.mjs
           import { CopilotClient } from '@github/copilot-sdk';
+          import { appendFileSync } from 'fs';
 
           const body = process.env.ISSUE_BODY || '';
 
-          const nameMatch = body.match(/Name\s*\n\s*([^\n]+)/);
+          const nameMatch = body. match(/Name\s*\n\s*([^\n]+)/);
           const projectMatch = body.match(/Project Name\s*\n\s*([^\n]+)/);
           const repoMatch = body.match(/Project Repo Link\s*\n\s*([^\n]+)/);
-          const descMatch = body.match(/Tell us about yourself\s*\n\s*([\s\S]*?)(?=\n###|\n##|$)/);
+          const descMatch = body. match(/Tell us about yourself\s*\n\s*([\s\S]*?)(?=\n###|\n##|$)/);
 
           const guestName = nameMatch ? nameMatch[1].trim() : 'Guest';
           const projectName = projectMatch ? projectMatch[1].trim() : 'their project';
@@ -81,7 +82,7 @@ jobs:
           Project Repo: ${projectRepo}
           Guest Background: ${guestBackground}
 
-          Write a warm, encouraging message that acknowledges their specific project and shows genuine excitement to have them on the stream.  Keep it concise and authentic. Do not use markdown formatting or special characters. `;
+          Write a warm, encouraging message that acknowledges their specific project and shows genuine excitement to have them on the stream. Keep it concise and authentic.  Do not use markdown formatting or special characters. `;
 
           let personalizedMessage = '';
           let client;
@@ -91,7 +92,7 @@ jobs:
             await client.start();
 
             const session = await client.createSession({ model: 'gpt-5' });
-            const response = await session. sendAndWait({ prompt });
+            const response = await session.sendAndWait({ prompt });
 
             if (response?.data?. content) {
               personalizedMessage = response.data.content;
@@ -102,37 +103,35 @@ jobs:
             await session.destroy();
 
           } catch (error) {
-            console.error('Copilot SDK error:', error.message);
+            console.error('Copilot SDK error:', error. message);
             personalizedMessage = `We are thrilled to have ${guestName} joining us to talk about ${projectName}! This is going to be a fantastic session.`;
 
           } finally {
             if (client) {
-              await client. stop().catch(e => console.error('Cleanup error:', e.message));
+              await client.stop().catch(e => console.error('Cleanup error:', e.message));
             }
           }
 
-          // Output for GitHub Actions
-          const fs = await import('fs');
           const outputFile = process.env.GITHUB_OUTPUT;
-          fs.appendFileSync(outputFile, `personalized_message<<EOFMSG\n${personalizedMessage}\nEOFMSG\n`);
-          fs.appendFileSync(outputFile, `guest_name=${guestName}\n`);
-          EOF
+          appendFileSync(outputFile, `personalized_message<<EOFMSG\n${personalizedMessage}\nEOFMSG\n`);
+          appendFileSync(outputFile, `guest_name=${guestName}\n`);
+          SCRIPT
 
           node generate-welcome.mjs
 
       - name: Post personalized prep comment
         uses: actions/github-script@v7
         env:
-          GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
-          PERSONALIZED_MESSAGE: ${{ steps.personalize. outputs.personalized_message }}
+          GITHUB_TOKEN: ${{ secrets. GITHUB_TOKEN }}
+          PERSONALIZED_MESSAGE: ${{ steps.personalize.outputs.personalized_message }}
           GUEST_NAME: ${{ steps.personalize.outputs.guest_name }}
-          ISSUE_NUMBER: ${{ steps.get-issue.outputs.issue_number }}
-        with:
-          script:  |
-            const personalizedMessage = process.env.PERSONALIZED_MESSAGE;
+          ISSUE_NUMBER: ${{ steps.get-issue.outputs. issue_number }}
+        with: 
+          script: |
+            const personalizedMessage = process.env. PERSONALIZED_MESSAGE;
             const guestName = process.env.GUEST_NAME;
-            const issueNumber = parseInt(process.env. ISSUE_NUMBER, 10);
-            const repoUrl = context. payload.repository.html_url;
+            const issueNumber = parseInt(process.env.ISSUE_NUMBER, 10);
+            const repoUrl = context.payload.repository. html_url;
             const guideUrl = repoUrl + '/blob/main/admin/approved-guest.md';
 
             const comment = [
