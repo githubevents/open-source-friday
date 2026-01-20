@@ -308,8 +308,8 @@ jobs:
             const thumbnailGenerated = process.env. THUMBNAIL_GENERATED === 'true';
             const runId = process.env.RUN_ID;
             const repoUrl = 'https://github.com/' + context.repo.owner + '/' + context.repo.repo;
-            const guideUrl = repoUrl + '/blob/main/admin/approved-guest. md';
-            const thumbnailToolUrl = 'https://andreagriffiths11.github. io/thumbnail-gen/';
+            const guideUrl = repoUrl + '/blob/main/admin/approved-guest.md';
+            const thumbnailToolUrl = 'https://andreagriffiths11.github.io/thumbnail-gen/';
             const artifactUrl = repoUrl + '/actions/runs/' + runId;
             const mention = handle ? '@' + handle : guestName;
             let commentParts = [
