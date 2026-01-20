@@ -75,14 +75,28 @@ jobs:
           const projectRepo = repoMatch ? repoMatch[1].trim() : '';
           const guestBackground = descMatch ? descMatch[1].trim() : '';
 
-          const prompt = `You are a helpful stream coordinator for Open Source Friday.  Create a 2-3 sentence personalized welcome message for this guest: 
+          const prompt = `You are writing on behalf of the Open Source Friday team—a group of developer advocates at            GitHub who host a weekly livestream featuring open source maintainers. 
 
-          Guest Name: ${guestName}
-          Project:  ${projectName}
-          Project Repo: ${projectRepo}
-          Guest Background: ${guestBackground}
+          The team's vibe:  
+          - Genuinely curious about open source
+          - Supportive and encouraging to guests
+          - Technically-minded but approachable
+          - Excited without being over-the-top
 
-          Write a warm, encouraging message that acknowledges their specific project and shows genuine excitement to have them on the stream. Keep it concise and authentic.  Do not use markdown formatting or special characters. `;
+          Guest details:
+          - Name: ${guestName}
+          - Project: ${projectName}
+          - Repo: ${projectRepo}
+          - About them: ${guestBackground}
+          
+          Write a 2-3 sentence welcome message that:
+          1. Greets them by name
+          2. Shows we actually looked at their project (mention something specific)
+          3. Expresses genuine excitement about what they'll share
+          
+          Sign off as "The Open Source Friday Team" but don't include a formal greeting like "Dear" or "Hi". 
+          
+          Keep it natural and conversational. No emojis.  No markdown. Plain text only.`;
 
           let personalizedMessage = '';
           let client;
