@@ -11,7 +11,7 @@ on:
         type: number
 
 jobs:
-  generate-prep:
+  generate-prep: 
     if: github.event.label.name == 'scheduled' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
@@ -54,46 +54,47 @@ jobs:
         id: personalize
         env:
           GH_TOKEN: ${{ secrets. COPILOT_PAT }}
-          ISSUE_BODY:  ${{ steps.get-issue. outputs.issue_body }}
+          ISSUE_BODY: ${{ steps.get-issue.outputs.issue_body }}
         run: |
           cat > script1.mjs << 'EOF'
           import { appendFileSync } from 'fs';
 
-          const body = process.env. ISSUE_BODY || '';
+          const body = process.env.ISSUE_BODY || '';
 
           const nameMatch = body.match(/### Name\s*\n\s*([^\n]+)/i);
-          const handleMatch = body.match(/### GitHub Handle\s*\n\s*@? ([^\n\s]+)/i);
+          const handleMatch = body. match(/### GitHub Handle\s*\n\s*@? ([^\n\s]+)/i);
           const projectMatch = body.match(/### Project Name\s*\n\s*([^\n]+)/i);
           const repoMatch = body.match(/### Project Repo Link\s*\n\s*(https:\/\/github\.com\/[^\s]+)/i);
           const descMatch = body.match(/### Tell us about yourself\s*\n\s*([\s\S]*?)(?=\n###|$)/i);
 
-          let guestName = nameMatch ? nameMatch[1].trim() : 'Guest';
+          let guestName = nameMatch ? nameMatch[1]. trim() : 'Guest';
           let handle = handleMatch ? handleMatch[1].trim().replace(/^@/, '') : '';
           const projectName = projectMatch ? projectMatch[1].trim() : '';
-          const projectRepo = repoMatch ? repoMatch[1].trim() : '';
-          const guestBackground = descMatch ?  descMatch[1].trim() : '';
+          const projectRepo = repoMatch ? repoMatch[1]. trim() : '';
+          const guestBackground = descMatch ? descMatch[1].trim() : '';
 
           if (!handle && projectRepo) {
-            const repoUserMatch = projectRepo.match(/github\.com\/([^\/]+)/);
+            const repoUserMatch = projectRepo.match(/github\. com\/([^\/]+)/);
             if (repoUserMatch) {
               handle = repoUserMatch[1];
               console.log('Extracted handle from repo URL:', handle);
             }
           }
 
-          console. log('=== PARSED ISSUE DATA ===');
-          console. log('Guest Name:', guestName);
+          console.log('=== PARSED ISSUE DATA ===');
+          console.log('Guest Name:', guestName);
           console.log('Handle:', handle);
           console.log('Project:', projectName);
-          console.log('Repo:', projectRepo);
+          console. log('Repo:', projectRepo);
 
           let personalizedMessage = '';
+          let client = null;
 
           try {
             const { CopilotClient } = await import('@github/copilot-sdk');
             
             console.log('Initializing Copilot SDK.. .');
-            const client = new CopilotClient();
+            client = new CopilotClient();
             
             const prompt = `You are writing on behalf of the Open Source Friday team—a group of developer advocates at GitHub who host a weekly livestream featuring open source maintainers. 
 
@@ -106,10 +107,10 @@ jobs:
           Guest details: 
           - Name: ${guestName}
           - Project: ${projectName || 'their project'}
-          - Repo:  ${projectRepo}
+          - Repo: ${projectRepo}
           - About them: ${guestBackground}
 
-          Write a 2-3 sentence welcome message that:
+          Write a 2-3 sentence welcome message that: 
           1. Greets them by name
           2. Shows we actually looked at their project (mention something specific if possible)
           3. Expresses genuine excitement about what they will share
@@ -137,10 +138,10 @@ jobs:
             console.error('Copilot SDK error:', error.message);
           }
 
-          if (!personalizedMessage) {
+          if (! personalizedMessage) {
             console.log('Using fallback message');
             if (projectName && guestBackground && guestBackground !== '_No response_') {
-              personalizedMessage = guestName + ', we are excited to have you on Open Source Friday! ' + projectName + ' sounds like a fantastic project, and we cannot wait to hear more about your journey building it. Our audience is going to love learning from your experience.\n\nThe Open Source Friday Team';
+              personalizedMessage = guestName + ', we are excited to have you on Open Source Friday! ' + projectName + ' sounds like a fantastic project, and we cannot wait to hear more about your journey building it.  Our audience is going to love learning from your experience.\n\nThe Open Source Friday Team';
             } else if (projectName) {
               personalizedMessage = guestName + ', welcome to Open Source Friday! We are thrilled to have you joining us to talk about ' + projectName + '. This is going to be a great session.\n\nThe Open Source Friday Team';
             } else {
@@ -148,7 +149,7 @@ jobs:
             }
           }
 
-          const outputFile = process.env. GITHUB_OUTPUT;
+          const outputFile = process.env.GITHUB_OUTPUT;
           appendFileSync(outputFile, 'personalized_message<<EOFMSG\n' + personalizedMessage + '\nEOFMSG\n');
           appendFileSync(outputFile, 'guest_name=' + guestName + '\n');
           appendFileSync(outputFile, 'handle=' + handle + '\n');
@@ -156,8 +157,10 @@ jobs:
           appendFileSync(outputFile, 'project_repo=' + projectRepo + '\n');
 
           console.log('Welcome message generated successfully');
+
+          await new Promise(function(resolve) { setTimeout(resolve, 3000); });
           EOF
-          node script1.mjs
+          node script1.mjs || true
 
       - name: Generate thumbnail
         id: thumbnail
@@ -191,7 +194,7 @@ jobs:
           }
 
           console.log('=== THUMBNAIL GENERATION ===');
-          console.log('Guest:', guestName);
+          console. log('Guest:', guestName);
           console. log('Handle:', handle);
           console.log('Project:', projectName);
           console.log('Repo:', projectRepo);
@@ -217,7 +220,7 @@ jobs:
               timeout: 60000
             });
 
-            console. log('Page loaded successfully');
+            console.log('Page loaded successfully');
 
             console.log('Filling guest name:', guestName);
             await page.evaluate(function() { document.getElementById('guestName').value = ''; });
@@ -236,14 +239,14 @@ jobs:
             if (projectName) {
               const hasProjectName = await page.$('#projectName');
               if (hasProjectName) {
-                console. log('Filling project name:', projectName);
+                console.log('Filling project name:', projectName);
                 await page. evaluate(function() { document.getElementById('projectName').value = ''; });
                 await page.type('#projectName', projectName);
               }
             }
 
             console. log('Clicking generate button...');
-            await page.click('#generateBtn');
+            await page. click('#generateBtn');
 
             console.log('Waiting for thumbnail generation...');
 
@@ -258,8 +261,8 @@ jobs:
                 const downloadBtn = document.getElementById('downloadBtn');
                 const banner = document.getElementById('banner');
                 return {
-                  downloadDisabled: downloadBtn ? downloadBtn.disabled : true,
-                  bannerText: banner ? banner.textContent : '',
+                  downloadDisabled: downloadBtn ?  downloadBtn.disabled : true,
+                  bannerText: banner ? banner.textContent :  '',
                   bannerClass: banner ? banner.className : ''
                 };
               });
@@ -291,8 +294,8 @@ jobs:
             const base64Data = thumbnailData.replace(/^data:image\/png;base64,/, '');
             writeFileSync('thumbnail.png', Buffer.from(base64Data, 'base64'));
 
-            console. log('Thumbnail saved successfully!');
-            appendFileSync(process. env.GITHUB_OUTPUT, 'thumbnail_generated=true\n');
+            console. log('Thumbnail saved successfully! ');
+            appendFileSync(process.env.GITHUB_OUTPUT, 'thumbnail_generated=true\n');
 
           } catch (error) {
             console.error('Error generating thumbnail:', error. message);
@@ -304,8 +307,8 @@ jobs:
           node script2.mjs
 
       - name: Upload thumbnail artifact
-        if: steps. thumbnail.outputs.thumbnail_generated == 'true'
-        uses:  actions/upload-artifact@v4
+        if: steps.thumbnail.outputs.thumbnail_generated == 'true'
+        uses: actions/upload-artifact@v4
         with:
           name:  thumbnail-issue-${{ steps.get-issue.outputs.issue_number }}
           path: thumbnail.png
@@ -315,9 +318,9 @@ jobs:
         uses: actions/github-script@v7
         env:
           PERSONALIZED_MESSAGE: ${{ steps. personalize.outputs.personalized_message }}
-          GUEST_NAME: ${{ steps.personalize. outputs.guest_name }}
+          GUEST_NAME: ${{ steps.personalize.outputs.guest_name }}
           HANDLE: ${{ steps.personalize.outputs.handle }}
-          ISSUE_NUMBER: ${{ steps. get-issue.outputs.issue_number }}
+          ISSUE_NUMBER: ${{ steps.get-issue.outputs.issue_number }}
           THUMBNAIL_GENERATED: ${{ steps. thumbnail.outputs.thumbnail_generated }}
           RUN_ID: ${{ github.run_id }}
         with:
@@ -326,11 +329,11 @@ jobs:
             const guestName = process.env.GUEST_NAME;
             const handle = process.env.HANDLE;
             const issueNumber = parseInt(process.env.ISSUE_NUMBER, 10);
-            const thumbnailGenerated = process.env.THUMBNAIL_GENERATED === 'true';
+            const thumbnailGenerated = process.env. THUMBNAIL_GENERATED === 'true';
             const runId = process.env.RUN_ID;
             const repoUrl = 'https://github.com/' + context.repo.owner + '/' + context.repo.repo;
             const guideUrl = repoUrl + '/blob/main/admin/approved-guest. md';
-            const thumbnailToolUrl = 'https://andreagriffiths11.github.io/thumbnail-gen/';
+            const thumbnailToolUrl = 'https://andreagriffiths11.github. io/thumbnail-gen/';
             const artifactUrl = repoUrl + '/actions/runs/' + runId;
 
             const mention = handle ? '@' + handle : guestName;
@@ -348,16 +351,16 @@ jobs:
               commentParts = commentParts.concat([
                 '### 🖼️ Your Promotional Thumbnail',
                 '',
-                '✅ Your custom thumbnail has been generated! ',
+                '✅ Your custom thumbnail has been generated!',
                 '',
                 '**To download it:**',
                 '1. [Click here to view the workflow run](' + artifactUrl + ')',
                 '2. Scroll down to **Artifacts**',
                 '3. Download `thumbnail-issue-' + issueNumber + '`',
                 '',
-                'Use this thumbnail to promote your upcoming stream on social media! ',
+                'Use this thumbnail to promote your upcoming stream on social media!',
                 '',
-                '> 💡 Want to customize it?  Use our [thumbnail generator](' + thumbnailToolUrl + ').',
+                '> 💡 Want to customize it? Use our [thumbnail generator](' + thumbnailToolUrl + ').',
                 '',
                 '---',
                 ''
@@ -390,7 +393,7 @@ jobs:
 
             const comment = commentParts.join('\n');
 
-            await github.rest. issues.createComment({
+            await github.rest.issues. createComment({
               issue_number: issueNumber,
               owner: context.repo.owner,
               repo: context.repo.repo,
