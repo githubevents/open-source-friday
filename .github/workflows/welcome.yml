@@ -59,9 +59,9 @@ jobs:
           import { appendFileSync } from 'fs';
           const body = process.env.ISSUE_BODY || '';
           const nameMatch = body.match(/### Name\s*\n\s*([^\n]+)/i);
-          const handleMatch = body. match(/### GitHub Handle\s*\n\s*@? ([^\n\s]+)/i);
+          const handleMatch = body. match(/### GitHub Handle\s*\n\s*@?([^\n\s]+)/i);
           const projectMatch = body.match(/### Project Name\s*\n\s*([^\n]+)/i);
-          const repoMatch = body.match(/### Project Repo Link\s*\n\s*(https:\/\/github\. com\/[^\s]+)/i);
+          const repoMatch = body.match(/### Project Repo Link\s*\n\s*(https:\/\/github\.com\/[^\s]+)/i);
           const descMatch = body.match(/### Tell us about yourself\s*\n\s*([\s\S]*?)(?=\n###|$)/i);
           let guestName = nameMatch ?  nameMatch[1].trim() : 'Guest';
           let handle = handleMatch ? handleMatch[1].trim().replace(/^@/, '') : '';
