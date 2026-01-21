@@ -133,52 +133,39 @@ jobs:
             '',
             'Keep it natural and conversational. No emojis. No markdown. Plain text only.'
           ];
+          
           try {
-            console.log('Initializing Copilot SDK...');
-            const copilotModule = await import('@github/copilot-sdk');
-            console.log('Available exports:', Object.keys(copilotModule));
-            console.log('Default export type:', typeof copilotModule.default);
-            
-            let client;
-            if (copilotModule.CopilotClient) {
-              client = new copilotModule.CopilotClient();
-            } else if (copilotModule.default) {
-              client = new copilotModule.default();
-            } else if (typeof copilotModule.createClient === 'function') {
-              client = copilotModule.createClient();
-            }
-            
-            if (client) {
-              const prompt = promptLines.join('\n');
-              console.log('Sending prompt to Copilot...');
-              const response = await client.ask({ prompt });
-              if (response) {
-                personalizedMessage = response;
-                console.log('Received personalized message from Copilot');
-              }
-            } else {
-              console.log('Could not initialize Copilot client');
-            }
+          const { CopilotClient, CopilotSession } = await import('@github/copilot-sdk');
+          console.log('Initializing Copilot SDK...');
+          const client = new CopilotClient();
+          const prompt = promptLines. join('\n');
+          console.log('Sending prompt to Copilot...');
+          const session = new CopilotSession(client);
+          const response = await session. chat(prompt);
+          if (response) {
+            personalizedMessage = response;
+            console.log('Received personalized message from Copilot');
+          }
           } catch (error) {
             console.error('Copilot SDK error:', error.message);
-            console.error('Stack:', error.stack);
+            console.error('Stack:', error. stack);
           }
           if (!personalizedMessage) {
             console.log('Using fallback message');
             if (guestBackground && guestBackground !== '_No response_' && guestBackground.length > 5) {
               personalizedMessage = guestName + ', we love that you described yourself as "' + guestBackground + '" - you are going to fit right in! We cannot wait to dive into ' + (projectName || 'your project') + ' with you.\n\nThe Open Source Friday Team';
             } else if (projectName) {
-              personalizedMessage = guestName + ', we are excited to have you on Open Source Friday! ' + projectName + ' sounds like a fantastic project, and we cannot wait to hear more about your journey building it.\n\nThe Open Source Friday Team';
+              personalizedMessage = guestName + ', we are excited to have you on Open Source Friday!  ' + projectName + ' sounds like a fantastic project, and we cannot wait to hear more about your journey building it.\n\nThe Open Source Friday Team';
             } else {
-              personalizedMessage = guestName + ', welcome to Open Source Friday! We are excited to have you joining us.\n\nThe Open Source Friday Team';
+              personalizedMessage = guestName + ', welcome to Open Source Friday!  We are excited to have you joining us.\n\nThe Open Source Friday Team';
             }
           }
-          const outputFile = process.env.GITHUB_OUTPUT;
+          const outputFile = process.env. GITHUB_OUTPUT;
           appendFileSync(outputFile, 'personalized_message<<EOFMSG\n' + personalizedMessage + '\nEOFMSG\n');
           console.log('Welcome message generated successfully');
           ENDSCRIPT
           node copilot.mjs || true
-      
+          
       - name: Generate thumbnail
         id: thumbnail
         env:
