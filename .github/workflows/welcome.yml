@@ -26,7 +26,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g @github/copilot-cli
+          npm install -g @github/copilot
           npm install @github/copilot-sdk puppeteer
 
       - name: Get issue data
