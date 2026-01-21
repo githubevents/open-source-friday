@@ -92,79 +92,86 @@ jobs:
           node parse.mjs
 
       - name: Generate welcome message with Copilot
-        id:  personalize
+        id: personalize
         env:
-          GH_TOKEN: ${{ secrets.COPILOT_PAT }}
-          GUEST_NAME:  ${{ steps.parse.outputs. guest_name }}
-          HANDLE: ${{ steps.parse.outputs.handle }}
-          PROJECT_NAME: ${{ steps.parse.outputs.project_name }}
-          PROJECT_REPO: ${{ steps. parse.outputs.project_repo }}
-          GUEST_BACKGROUND:  ${{ steps.parse.outputs. guest_background }}
-        run:  |
-          cat > copilot.mjs << 'ENDSCRIPT'
+          GH_TOKEN: ${{ secrets. COPILOT_PAT }}
+          GUEST_NAME: ${{ steps.parse. outputs.guest_name }}
+          HANDLE:  ${{ steps.parse.outputs.handle }}
+          PROJECT_NAME:  ${{ steps.parse.outputs.project_name }}
+          PROJECT_REPO: ${{ steps.parse.outputs.project_repo }}
+          GUEST_BACKGROUND: ${{ steps.parse.outputs.guest_background }}
+        run: |
+          cat > copilot. mjs << 'ENDSCRIPT'
           import { appendFileSync } from 'fs';
-          const guestName = process.env.GUEST_NAME || 'Guest';
+          
+          const guestName = process. env.GUEST_NAME || 'Guest';
           const projectName = process.env.PROJECT_NAME || '';
           const projectRepo = process.env.PROJECT_REPO || '';
           const guestBackground = process.env.GUEST_BACKGROUND || '';
-          console.log('=== GENERATING WELCOME MESSAGE ===');
-          console.log('Guest:', guestName);
+          
+          console. log('=== GENERATING WELCOME MESSAGE ===');
+          console. log('Guest:', guestName);
           console.log('Project:', projectName);
+          console.log('Background:', guestBackground);
+          
           let personalizedMessage = '';
+          
+          const promptLines = [
+            'You are writing on behalf of the Open Source Friday team—a group at GitHub who host a weekly livestream featuring open source maintainers.',
+            '',
+            'The team vibe:  Genuinely curious about open source, supportive and encouraging to guests, technically-minded but approachable, excited without being over-the-top.',
+            '',
+            'Guest details:',
+            '- Name: ' + guestName,
+            '- Project: ' + (projectName || 'their project'),
+            '- Repo: ' + projectRepo,
+            '- About them (in their own words): ' + guestBackground,
+            '',
+            'Write a 2-3 sentence welcome message that: ',
+            '1. Greets them by name',
+            '2. Matches their energy - if they are playful, be playful back; if they are formal, be warm but professional',
+            '3. References something specific they said about themselves or their project',
+            '4. Shows genuine excitement about having them on the stream',
+            '',
+            'Sign off as "The Open Source Friday Team" but do not include a formal greeting like "Dear" or "Hi".',
+            '',
+            'Keep it natural and conversational.  No emojis. No markdown. Plain text only.'
+          ];
+          
           try {
             const { CopilotClient } = await import('@github/copilot-sdk');
             console.log('Initializing Copilot SDK...');
             const client = new CopilotClient();
-            const promptLines = [
-              'You are writing on behalf of the Open Source Friday team—a group of developer advocates at GitHub who host a weekly livestream featuring open source maintainers.',
-              '',
-              'The team vibe:  Genuinely curious about open source, supportive and encouraging to guests, technically-minded but approachable, excited without being over-the-top.',
-              '',
-              'Guest details:',
-              '- Name: ' + guestName,
-              '- Project: ' + (projectName || 'their project'),
-              '- Repo: ' + projectRepo,
-              '- About them (in their own words): ' + guestBackground,
-              '',
-              'Write a 2-3 sentence welcome message that: ',
-              '1. Greets them by name',
-              '2. Matches their energy — if they are playful, be playful back; if they are formal, be warm but professional',
-              '3. References something specific they said about themselves or their project',
-              '4. Shows genuine excitement about having them on the stream',
-              '',
-              'Sign off as "The Open Source Friday Team" but do not include a formal greeting like "Dear" or "Hi".',
-              '',
-              'Keep it natural and conversational.  No emojis.  No markdown. Plain text only.'
-            ];
+            
             const prompt = promptLines.join('\n');
-            await client.start();
-            console. log('Creating session...');
-            const session = await client.createSession({ model: 'gpt-4' });
-            console.log('Sending prompt to Copilot...');
-            const response = await session.sendAndWait({ prompt });
-            if (response && response.data && response.data. content) {
-              personalizedMessage = response.data.content;
+            
+            console.log('Sending prompt to Copilot.. .');
+            const response = await client.ask({ prompt });
+            
+            if (response) {
+              personalizedMessage = response;
               console.log('Received personalized message from Copilot');
             }
-            try { await session.destroy(); } catch (e) { }
-            try { await client.stop(); } catch (e) { }
           } catch (error) {
             console.error('Copilot SDK error:', error.message);
           }
-          if (!personalizedMessage) {
+          
+          if (! personalizedMessage) {
             console.log('Using fallback message');
-            if (projectName) {
-              personalizedMessage = guestName + ', we are excited to have you on Open Source Friday! ' + projectName + ' sounds like a fantastic project, and we cannot wait to hear more about your journey building it.  Our audience is going to love learning from your experience.\n\nThe Open Source Friday Team';
+            if (guestBackground && guestBackground !== '_No response_' && guestBackground. length > 5) {
+              personalizedMessage = guestName + ', we love that you described yourself as "' + guestBackground + '" - you are going to fit right in!  We cannot wait to dive into ' + (projectName || 'your project') + ' with you.\n\nThe Open Source Friday Team';
+            } else if (projectName) {
+              personalizedMessage = guestName + ', we are excited to have you on Open Source Friday! ' + projectName + ' sounds like a fantastic project, and we cannot wait to hear more about your journey building it.\n\nThe Open Source Friday Team';
             } else {
-              personalizedMessage = guestName + ', welcome to Open Source Friday! We are excited to have you joining us.  This is going to be a fantastic session.\n\nThe Open Source Friday Team';
+              personalizedMessage = guestName + ', welcome to Open Source Friday! We are excited to have you joining us.\n\nThe Open Source Friday Team';
             }
           }
+          
           const outputFile = process.env.GITHUB_OUTPUT;
           appendFileSync(outputFile, 'personalized_message<<EOFMSG\n' + personalizedMessage + '\nEOFMSG\n');
           console.log('Welcome message generated successfully');
-          await new Promise(function(resolve) { setTimeout(resolve, 3000); });
           ENDSCRIPT
-          node copilot.mjs || true
+          node copilot. mjs || true
 
       - name: Generate thumbnail
         id: thumbnail
