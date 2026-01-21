@@ -116,24 +116,26 @@ jobs:
             console.log('Initializing Copilot SDK...');
             const client = new CopilotClient();
             const promptLines = [
+              const promptLines = [
               'You are writing on behalf of the Open Source Friday team—a group of developer advocates at GitHub who host a weekly livestream featuring open source maintainers.',
               '',
               'The team vibe:  Genuinely curious about open source, supportive and encouraging to guests, technically-minded but approachable, excited without being over-the-top.',
               '',
               'Guest details:',
-              '- Name:  ' + guestName,
+              '- Name: ' + guestName,
               '- Project: ' + (projectName || 'their project'),
               '- Repo: ' + projectRepo,
-              '- About them: ' + guestBackground,
+              '- About them (in their own words): ' + guestBackground,
               '',
-              'Write a 2-3 sentence welcome message that:',
+              'Write a 2-3 sentence welcome message that: ',
               '1. Greets them by name',
-              '2. Shows we actually looked at their project (mention something specific if possible)',
-              '3. Expresses genuine excitement about what they will share',
+              '2. Matches their energy — if they are playful, be playful back; if they are formal, be warm but professional',
+              '3. References something specific they said about themselves or their project',
+              '4. Shows genuine excitement about having them on the stream',
               '',
               'Sign off as "The Open Source Friday Team" but do not include a formal greeting like "Dear" or "Hi".',
               '',
-              'Keep it natural and conversational. No emojis. No markdown. Plain text only.'
+              'Keep it natural and conversational.  No emojis.  No markdown. Plain text only.'
             ];
             const prompt = promptLines.join('\n');
             await client.start();
