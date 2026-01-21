@@ -90,11 +90,11 @@ jobs:
           console.log('Outputs written successfully');
           ENDSCRIPT
           node parse.mjs
-
+          
       - name: Generate welcome message with Copilot
         id: personalize
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.COPILOT_PAT }}
           GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
           HANDLE: ${{ steps.parse.outputs.handle }}
           PROJECT_NAME: ${{ steps.parse.outputs.project_name }}
@@ -103,19 +103,15 @@ jobs:
         run: |
           cat > copilot.mjs << 'ENDSCRIPT'
           import { appendFileSync } from 'fs';
-          
           const guestName = process.env.GUEST_NAME || 'Guest';
           const projectName = process.env.PROJECT_NAME || '';
           const projectRepo = process.env.PROJECT_REPO || '';
           const guestBackground = process.env.GUEST_BACKGROUND || '';
-          
           console.log('=== GENERATING WELCOME MESSAGE ===');
           console.log('Guest:', guestName);
           console.log('Project:', projectName);
           console.log('Background:', guestBackground);
-          
           let personalizedMessage = '';
-          
           const promptLines = [
             'You are writing on behalf of the Open Source Friday team—a group at GitHub who host a weekly livestream featuring open source maintainers.',
             '',
@@ -137,17 +133,13 @@ jobs:
             '',
             'Keep it natural and conversational. No emojis. No markdown. Plain text only.'
           ];
-          
           try {
-            const { Client } = await import('@github/copilot-sdk');
             console.log('Initializing Copilot SDK...');
+            const Client = (await import('@github/copilot-sdk')).default;
             const client = new Client();
-            
             const prompt = promptLines.join('\n');
-            
             console.log('Sending prompt to Copilot...');
             const response = await client.ask({ prompt });
-            
             if (response) {
               personalizedMessage = response;
               console.log('Received personalized message from Copilot');
@@ -155,7 +147,6 @@ jobs:
           } catch (error) {
             console.error('Copilot SDK error:', error.message);
           }
-          
           if (!personalizedMessage) {
             console.log('Using fallback message');
             if (guestBackground && guestBackground !== '_No response_' && guestBackground.length > 5) {
@@ -166,13 +157,12 @@ jobs:
               personalizedMessage = guestName + ', welcome to Open Source Friday! We are excited to have you joining us.\n\nThe Open Source Friday Team';
             }
           }
-          
           const outputFile = process.env.GITHUB_OUTPUT;
           appendFileSync(outputFile, 'personalized_message<<EOFMSG\n' + personalizedMessage + '\nEOFMSG\n');
           console.log('Welcome message generated successfully');
           ENDSCRIPT
           node copilot.mjs || true
-
+      
       - name: Generate thumbnail
         id: thumbnail
         env:
