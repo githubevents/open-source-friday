@@ -2,7 +2,7 @@ name: Open Source Friday Guest Request
 description: Complete this form to request to be a guest on Open Source Friday
 title: Open Source Friday - [PROJECT NAME] - [MM-DD-YYYY]
 labels: ["open-source-friday", "open-source", "twitch", "pending"]
-assignees: ["LadyKerr", "AndreaGriffiths11", "KevinCrosby"]
+assignees: ["AndreaGriffiths11"]
 
 body:
   - type: markdown
