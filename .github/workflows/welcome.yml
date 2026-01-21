@@ -101,7 +101,7 @@ jobs:
           PROJECT_REPO: ${{ steps.parse.outputs.project_repo }}
           GUEST_BACKGROUND: ${{ steps.parse.outputs.guest_background }}
         run: |
-          cat > .mjs << 'ENDSCRIPT'
+          cat > copilot.mjs << 'ENDSCRIPT'
           import { appendFileSync } from 'fs';
           
           const guestName = process. env.GUEST_NAME || 'Guest';
