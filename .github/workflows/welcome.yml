@@ -25,7 +25,7 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install @github/copilot-sdk puppeteer
+        run: npm install @github/-sdk puppeteer
 
       - name: Get issue data
         id: get-issue
@@ -91,17 +91,17 @@ jobs:
           ENDSCRIPT
           node parse.mjs
 
-      - name: Generate welcome message with Copilot
+      - name: Generate welcome message with 
         id: personalize
         env:
-          GH_TOKEN: ${{ secrets. COPILOT_PAT }}
+          GH_TOKEN: ${{ secrets. _PAT }}
           GUEST_NAME: ${{ steps.parse. outputs.guest_name }}
           HANDLE:  ${{ steps.parse.outputs.handle }}
           PROJECT_NAME:  ${{ steps.parse.outputs.project_name }}
           PROJECT_REPO: ${{ steps.parse.outputs.project_repo }}
           GUEST_BACKGROUND: ${{ steps.parse.outputs.guest_background }}
         run: |
-          cat > copilot.mjs << 'ENDSCRIPT'
+          cat > .mjs << 'ENDSCRIPT'
           import { appendFileSync } from 'fs';
           
           const guestName = process. env.GUEST_NAME || 'Guest';
@@ -139,21 +139,21 @@ jobs:
           ];
           
           try {
-            const { CopilotClient } = await import('@github/copilot-sdk');
-            console.log('Initializing Copilot SDK...');
-            const client = new CopilotClient();
+            const { Client } = await import('@github/-sdk');
+            console.log('Initializing  SDK...');
+            const client = new Client();
             
             const prompt = promptLines.join('\n');
             
-            console.log('Sending prompt to Copilot.. .');
+            console.log('Sending prompt to .. .');
             const response = await client.ask({ prompt });
             
             if (response) {
               personalizedMessage = response;
-              console.log('Received personalized message from Copilot');
+              console.log('Received personalized message from ');
             }
           } catch (error) {
-            console.error('Copilot SDK error:', error.message);
+            console.error(' SDK error:', error.message);
           }
           
           if (! personalizedMessage) {
@@ -171,7 +171,7 @@ jobs:
           appendFileSync(outputFile, 'personalized_message<<EOFMSG\n' + personalizedMessage + '\nEOFMSG\n');
           console.log('Welcome message generated successfully');
           ENDSCRIPT
-          node copilot. mjs || true
+          node copilot.mjs || true
 
       - name: Generate thumbnail
         id: thumbnail
