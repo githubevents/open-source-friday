@@ -164,7 +164,7 @@ jobs:
             }
             const outputFile = process.env.GITHUB_OUTPUT;
             appendFileSync(outputFile, 'personalized_message<<EOFMSG\n' + personalizedMessage + '\nEOFMSG\n');
-            console.log('Welcome message generated successfully');
+              console.log('Welcome message generated successfully');
             ENDSCRIPT
             node copilot.mjs || true
             
