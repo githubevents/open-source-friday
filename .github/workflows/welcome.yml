@@ -25,7 +25,9 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install @github/copilot-sdk puppeteer
+        run: |
+          npm install -g @github/copilot-cli
+          npm install @github/copilot-sdk puppeteer
 
       - name: Get issue data
         id: get-issue
