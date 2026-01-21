@@ -139,7 +139,7 @@ jobs:
           ];
           
           try {
-            const { Client } = await import('@github/-sdk');
+            const { Client } = await import('@github/copilot-sdk');
             console.log('Initializing  SDK...');
             const client = new Client();
             
