@@ -116,7 +116,6 @@ jobs:
             console.log('Initializing Copilot SDK...');
             const client = new CopilotClient();
             const promptLines = [
-              const promptLines = [
               'You are writing on behalf of the Open Source Friday team—a group of developer advocates at GitHub who host a weekly livestream featuring open source maintainers.',
               '',
               'The team vibe:  Genuinely curious about open source, supportive and encouraging to guests, technically-minded but approachable, excited without being over-the-top.',
