@@ -135,17 +135,33 @@ jobs:
           ];
           try {
             console.log('Initializing Copilot SDK...');
-            const Client = (await import('@github/copilot-sdk')).default;
-            const client = new Client();
-            const prompt = promptLines.join('\n');
-            console.log('Sending prompt to Copilot...');
-            const response = await client.ask({ prompt });
-            if (response) {
-              personalizedMessage = response;
-              console.log('Received personalized message from Copilot');
+            const copilotModule = await import('@github/copilot-sdk');
+            console.log('Available exports:', Object.keys(copilotModule));
+            console.log('Default export type:', typeof copilotModule.default);
+            
+            let client;
+            if (copilotModule.CopilotClient) {
+              client = new copilotModule.CopilotClient();
+            } else if (copilotModule.default) {
+              client = new copilotModule.default();
+            } else if (typeof copilotModule.createClient === 'function') {
+              client = copilotModule.createClient();
+            }
+            
+            if (client) {
+              const prompt = promptLines.join('\n');
+              console.log('Sending prompt to Copilot...');
+              const response = await client.ask({ prompt });
+              if (response) {
+                personalizedMessage = response;
+                console.log('Received personalized message from Copilot');
+              }
+            } else {
+              console.log('Could not initialize Copilot client');
             }
           } catch (error) {
             console.error('Copilot SDK error:', error.message);
+            console.error('Stack:', error.stack);
           }
           if (!personalizedMessage) {
             console.log('Using fallback message');
