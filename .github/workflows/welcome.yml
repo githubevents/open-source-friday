@@ -24,17 +24,17 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies
+      - : Install dependencies
         run: npm install @github/copilot-sdk puppeteer
 
-      - name: Get issue data
+      - : Get issue data
         id: get-issue
         uses: actions/github-script@v7
         with:
           script: |
             let issueNumber;
             let issue;
-            if (context.eventName === 'workflow_dispatch') {
+            if (context.event === 'workflow_dispatch') {
               issueNumber = ${{ github.event.inputs.issue_number || 0 }};
               const response = await github.rest. issues.get({
                 owner: context.repo.owner,
@@ -50,7 +50,7 @@ jobs:
             core.setOutput('issue_body', issue.body || '');
             core.setOutput('issue_url', issue.html_url);
 
-      - name: Parse issue data
+      - : Parse issue data
         id: parse
         env:
           ISSUE_BODY: ${{ steps.get-issue.outputs.issue_body }}
@@ -58,7 +58,7 @@ jobs:
           cat > parse.mjs << 'ENDSCRIPT'
           import { appendFileSync } from 'fs';
           const body = process.env.ISSUE_BODY || '';
-          const nameMatch = body.match(/### Name\s*\n\s*([^\n]+)/i);
+          const Match = body.match(/### \s*\n\s*([^\n]+)/i);
           const handleMatch = body. match(/### GitHub Handle\s*\n\s*@?([^\n\s]+)/i);
           const projectMatch = body.match(/### Project Name\s*\n\s*([^\n]+)/i);
           const repoMatch = body.match(/### Project Repo Link\s*\n\s*(https:\/\/github\.com\/[^\s]+)/i);
@@ -91,10 +91,10 @@ jobs:
           ENDSCRIPT
           node parse.mjs
 
-      - name: Generate welcome message with 
+      - name: Generate welcome message with Copilot
         id: personalize
         env:
-          GH_TOKEN: ${{ secrets. _PAT }}
+          GH_TOKEN: ${{ secrets.COPILOT_PAT }}
           GUEST_NAME: ${{ steps.parse. outputs.guest_name }}
           HANDLE:  ${{ steps.parse.outputs.handle }}
           PROJECT_NAME:  ${{ steps.parse.outputs.project_name }}
@@ -139,9 +139,9 @@ jobs:
           ];
           
           try {
-            const { Client } = await import('@github/copilot-sdk');
+            const { CopilotClient } = await import('@github/copilot-sdk');
             console.log('Initializing  SDK...');
-            const client = new Client();
+            const client = new CopilotClient();
             
             const prompt = promptLines.join('\n');
             
