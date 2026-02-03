@@ -1,0 +1,59 @@
+name: Notify Scheduled Guests
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  notify-scheduled-guest:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'scheduled'
+    steps:
+      - name: Comment on scheduled issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Get the GitHub username directly from the issue author
+            const githubHandle = context.payload.issue.user.login;
+
+            console.log('Processing issue #', context.issue.number, 'by author:', githubHandle);
+
+            if (githubHandle) {
+              // Security: Enhanced validation function
+              const isValidGitHubHandle = (handle) => {
+                if (!handle || typeof handle !== 'string') return false;
+                if (handle.length < 1 || handle.length > 39) return false;
+
+                // Must start and end with alphanumeric, can contain hyphens in middle
+                return /^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$/.test(handle);
+              };
+
+              if (isValidGitHubHandle(githubHandle)) {
+                console.log('Creating comment for validated handle');
+
+                // Security: Sanitize comment content
+                const safeHandle = githubHandle.replace(/[<>'"&]/g, '');
+                const commentBody = `Hey @${safeHandle}, thank you for booking! ✨\n\nThe stream starts at 1:00 PM ET. Please join at 12:45 PM ET for prep and tech checks. Be ready with your demo—our audience strongly prefers technical demos.\n\nLet us know if you have any questions!\n\nKedasha, Andrea & Kevin 👯`;
+
+                const issueComment = {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: commentBody
+                };
+
+                try {
+                  const result = await github.rest.issues.createComment(issueComment);
+                  console.log('Comment created successfully, ID:', result.data.id);
+                } catch (error) {
+                  // Security: Don't expose error details in logs
+                  console.error('Failed to create comment for issue #', context.issue.number);
+                  // Don't re-throw to prevent workflow failure from exposing internals
+                }
+              } else {
+                console.log('Handle validation failed for issue #', context.issue.number);
+              }
+            } else {
+              console.log('No GitHub handle found for issue #', context.issue.number);
+            }
