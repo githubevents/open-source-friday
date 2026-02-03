@@ -93,6 +93,15 @@ jobs:
           ENDSCRIPT
           node parse.mjs
           
+      - name: Determine generation mode
+        id: mode
+        run: |
+          echo "mode=${{ case( 
+            steps.parse.outputs.handle != '' && steps.parse.outputs.project_repo != '', 'full-thumbnail',
+            steps.parse.outputs.guest_name != '' && steps.parse.outputs.handle == '', 'name-only',
+            'skip'
+          ) }}" >> $GITHUB_OUTPUT
+          
       - name: Generate welcome message with Copilot
         id: personalize
         env: 
@@ -171,6 +180,7 @@ jobs:
             
       - name: Generate thumbnail
         id: thumbnail
+        if: ${{ steps.mode.outputs.mode != 'skip' }}
         env:
           GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
           HANDLE: ${{ steps.parse.outputs.handle }}
