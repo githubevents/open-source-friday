@@ -180,7 +180,7 @@ jobs:
             
       - name: Generate thumbnail
         id: thumbnail
-        if: ${{ steps.mode.outputs.mode != 'skip' }}
+        if: ${{ steps.mode.outputs.mode == 'full-thumbnail' }}
         env:
           GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
           HANDLE: ${{ steps.parse.outputs.handle }}
