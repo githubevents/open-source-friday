@@ -12,7 +12,7 @@ on:
 
 jobs:
   generate-prep: 
-    if: github.event.label.name == 'scheduled' || github.event_name == 'workflow_dispatch'
+    if: ${{ github.event.label.name == 'scheduled' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -107,8 +107,8 @@ jobs:
         env: 
           GH_TOKEN: ${{ secrets.COPILOT_PAT }}
           GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
-          HANDLE: ${{ steps.parse. outputs.handle }}
-          PROJECT_NAME: ${{ steps.parse. outputs.project_name }}
+          HANDLE: ${{ steps.parse.outputs.handle }}
+          PROJECT_NAME: ${{ steps.parse.outputs.project_name }}
           PROJECT_REPO: ${{ steps.parse.outputs.project_repo }}
           GUEST_BACKGROUND: ${{ steps.parse.outputs.guest_background }}
         run: |
