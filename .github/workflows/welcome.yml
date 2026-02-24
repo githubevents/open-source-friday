@@ -1,17 +1,17 @@
 name: Guest Welcome Bot
 
 on:
-  issues: 
+  issues:
     types: [labeled]
-  workflow_dispatch: 
-    inputs: 
+  workflow_dispatch:
+    inputs:
       issue_number:
-        description: 'Issue number to test with'
+        description: "Issue number to test with"
         required: true
         type: number
 
 jobs:
-  generate-prep: 
+  generate-prep:
     if: ${{ github.event.label.name == 'scheduled' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
 
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install dependencies
         run: |
@@ -92,7 +92,7 @@ jobs:
           console.log('Outputs written successfully');
           ENDSCRIPT
           node parse.mjs
-          
+
       - name: Determine generation mode
         id: mode
         run: |
@@ -101,10 +101,10 @@ jobs:
             steps.parse.outputs.guest_name != '' && steps.parse.outputs.handle == '', 'name-only',
             'skip'
           ) }}" >> $GITHUB_OUTPUT
-          
+
       - name: Generate welcome message with Copilot
         id: personalize
-        env: 
+        env:
           GH_TOKEN: ${{ secrets.COPILOT_PAT }}
           GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
           HANDLE: ${{ steps.parse.outputs.handle }}
@@ -124,7 +124,7 @@ jobs:
           console.log('Background:', guestBackground);
           let personalizedMessage = '';
           const promptLines = [
-            'You are writing on behalf of the Open Source Friday team—a group at GitHub who host a weekly livestream featuring open source maintainers.',
+            'You are writing on behalf of the Open Source Friday team a group at GitHub who host a weekly livestream featuring open source maintainers.',
             '',
             'The team vibe: Genuinely curious about open source, supportive and encouraging to guests, technically-minded but approachable, excited without being over-the-top.',
             '',
@@ -138,7 +138,7 @@ jobs:
             '1. Greets them by name',
             '2. Matches their energy - if they are playful, be playful back; if they are formal, be warm but professional',
             '3. References something specific they said about themselves or their project',
-            '4. Shows genuine excitement about having them on the stream',
+            '4. Shows genuine excitement about having them on the stream, and encourages them to share their story and demo with the audience',
             '',
             'Sign off as "The Open Source Friday Team" but do not include a formal greeting like "Dear" or "Hi".',
             '',
@@ -177,7 +177,7 @@ jobs:
           console. log('Welcome message generated successfully');
           ENDSCRIPT
           node copilot.mjs || true
-            
+
       - name: Generate thumbnail
         id: thumbnail
         if: ${{ steps.mode.outputs.mode == 'full-thumbnail' }}
