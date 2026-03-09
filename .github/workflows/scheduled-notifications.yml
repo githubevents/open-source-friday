@@ -1,0 +1,95 @@
+name: Scheduled Guest & Host Notifications
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  notify-guest:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'scheduled'
+    steps:
+      - name: Notify guest with schedule and prep guide
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const githubHandle = context.payload.issue.user.login;
+
+            console.log('Processing issue #', context.issue.number, 'by author:', githubHandle);
+
+            if (!githubHandle) {
+              console.log('No GitHub handle found for issue #', context.issue.number);
+              return;
+            }
+
+            const isValidGitHubHandle = (handle) => {
+              if (!handle || typeof handle !== 'string') return false;
+              if (handle.length < 1 || handle.length > 39) return false;
+              return /^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$/.test(handle);
+            };
+
+            if (!isValidGitHubHandle(githubHandle)) {
+              console.log('Handle validation failed for issue #', context.issue.number);
+              return;
+            }
+
+            const safeHandle = githubHandle.replace(/[<>'"&]/g, '');
+
+            const commentBody = [
+              `Hey @${safeHandle} ✨`,
+              '',
+              "You're officially scheduled for **Open Source Friday**! 🚀🎥",
+              '',
+              'The stream starts at **1:00 PM ET**. Please join at **12:45 PM ET** for prep and tech checks. Be ready with your demo—our audience strongly prefers technical demos.',
+              '',
+              'Here are some guidelines on preparing for the live stream:',
+              '',
+              '[Preparation Instructions](https://github.com/githubevents/open-source-friday/blob/main/admin/guest-assets/Streaming-Guide.md)',
+              '',
+              'Let us know if you have any questions!',
+              '',
+              'Kedasha, Andrea & Kevin 👯',
+            ].join('\n');
+
+            try {
+              const result = await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: commentBody,
+              });
+              console.log('Guest notification created, ID:', result.data.id);
+            } catch (error) {
+              console.error('Failed to create guest comment for issue #', context.issue.number);
+            }
+
+  remind-hosts:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'scheduled'
+    steps:
+      - name: Post host checklist
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const commentBody = [
+              'Hi @LadyKerr, @AndreaGriffiths11, and @KevinCrosby,',
+              '',
+              'This stream has been scheduled. Please complete the following tasks:',
+              '',
+              '- [ ] Create social card',
+              '- [ ] Create meetup link',
+              '- [ ] Create and schedule twitch stream (LinkedIn, Twitch, YouTube)',
+              '- [ ] Schedule social media post (Twitter)',
+              '- [ ] Send prep doc to guests',
+              '',
+              'You can find the instructions in this [guide](https://github.com/githubevents/open-source-friday/blob/main/admin/guest-assets/Streaming-Guide.md).',
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: commentBody,
+            });

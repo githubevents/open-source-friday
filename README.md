@@ -4,7 +4,7 @@
 
 
 ## Open Source Friday - Live Stream Event ✨
-_Every Friday at 1 PM EST_
+_Every Friday at 1 PM ET_
 
 Join [Andrea Griffiths](https://www.x.com/alacolombiadev/), [Kedasha Kerr](https://www.instagram.com/itsthatlady.dev/), and [Kevin Crosby](https://www.linkedin.com/in/kevinanthonycrosby/) for Open Source Friday, where we dive into engaging discussions with maintainers from some of GitHub's most popular projects. Interested in participating? Start by checking out our [project criteria](https://github.com/githubevents/open-source-friday/blob/main/admin/project-criteria.md) and then open an issue using our [guest invite template](https://github.com/githubevents/open-source-friday/issues/new?template=osf-guest-invite.yml&assignees=AndreaGriffiths11%2CLadyKerr&labels=open-source%2Copen-source-friday%2Cpending%2Ctwitch).
 

@@ -1,7 +1,7 @@
 ### Unirse a la Transmisión
 Puedes unirte a la transmisión desde este enlace:
 
-La hora oficial de inicio es: 12:00 pm, hora del este (ET). Por favor, intenta unirte 10-15 minutos (alrededor de las 11:45) antes para que podamos probar el audio, el video y el intercambio de pantalla.
+La hora oficial de inicio es: 1:00 PM ET (hora del este). Por favor, intenta unirte 10-15 minutos (alrededor de las 12:45) antes para que podamos probar el audio, el video y el intercambio de pantalla.
 
 ## Formato
 
