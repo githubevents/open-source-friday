@@ -1,0 +1,44 @@
+name: Update Schedule Table in README
+
+on:
+  issues:
+    types: [labeled, unlabeled, closed, reopened, edited, assigned, unassigned]
+  schedule:
+    - cron: "0 9 * * 1" # Every Monday at 9 AM UTC
+  workflow_dispatch:
+
+jobs:
+  update-schedule:
+    runs-on: ubuntu-latest
+    # Only run on issue events when the 'scheduled' label is involved,
+    # or when triggered by schedule / manually
+    if: >
+      github.event_name != 'issues' ||
+      github.event.label.name == 'scheduled' ||
+      contains(github.event.issue.labels.*.name, 'scheduled')
+
+    permissions:
+      contents: write
+      issues: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build schedule table and update README
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python .github/scripts/update_schedule.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet README.md || (
+            git add README.md &&
+            git commit -m "chore: auto-update upcoming schedule table in README" &&
+            git push
+          )
