@@ -62,10 +62,33 @@ def parse_field(body: str, label: str) -> str:
     return match.group(1).strip()
 
 
+_MONTHS = (
+    "January|February|March|April|May|June|"
+    "July|August|September|October|November|December"
+)
+
+
+def parse_date_from_title(title: str) -> str:
+    """Try to extract a date string from an issue title."""
+    # Bracketed MM-DD-YYYY e.g. [04-17-2026]
+    m = re.search(r"\[(\d{1,2}-\d{1,2}-\d{4})\]", title)
+    if m:
+        return m.group(1)
+    # Unbracketed MM-DD-YYYY
+    m = re.search(r"(\d{1,2}-\d{1,2}-\d{4})", title)
+    if m:
+        return m.group(1)
+    # "Month D, YYYY" or "Month DD YYYY"
+    m = re.search(rf"({_MONTHS})\s+(\d{{1,2}}),?\s+(\d{{4}})", title)
+    if m:
+        return f"{m.group(1)} {m.group(2)}, {m.group(3)}"
+    return ""
+
+
 def parse_date(raw: str) -> datetime | None:
     """Try common date formats found in the issues."""
     raw = raw.strip()
-    for fmt in ("%m-%d-%Y", "%m/%d/%Y", "%-m-%-d-%Y"):
+    for fmt in ("%m-%d-%Y", "%m/%d/%Y", "%B %d, %Y", "%B %-d, %Y"):
         try:
             return datetime.strptime(raw, fmt)
         except ValueError:
@@ -83,12 +106,26 @@ def parse_date(raw: str) -> datetime | None:
 
 def build_row(issue: dict) -> dict | None:
     body = issue.get("body") or ""
+    title = issue.get("title") or ""
     number = issue["number"]
     url = issue["html_url"]
 
     guest_name = parse_field(body, "Name")
     raw_date = parse_field(body, "Dates")
     project = parse_field(body, "Project Name")
+
+    # Fall back to extracting date from the issue title for manually-created issues
+    if not raw_date or raw_date.upper() in ("TBD", "_NO RESPONSE_", "NOT YET", ""):
+        raw_date = parse_date_from_title(title)
+
+    # For manually-created issues the guest name may be in the title
+    # e.g. "Open Source Friday - Guest Name - MM-DD-YYYY"
+    if not guest_name:
+        parts = [p.strip() for p in re.split(r"\s+-\s+", title)]
+        # Remove the leading "Open Source Friday..." segment and trailing date segment
+        candidates = [p for p in parts[1:] if not re.search(r"\d{4}", p)]
+        if candidates:
+            guest_name = candidates[0]
 
     # Skip issues where the date is clearly TBD / not set
     if not raw_date or raw_date.upper() in ("TBD", "_NO RESPONSE_", "NOT YET"):
