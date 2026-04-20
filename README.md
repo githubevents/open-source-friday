@@ -15,7 +15,6 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 <!-- SCHEDULE_START -->
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
-| April 17, 2026 | [Gunnar Morling](https://github.com/githubevents/open-source-friday/issues/205) | Hardwood | brunoborges |
 | April 24, 2026 | [Teja Kummarikuntla](https://github.com/githubevents/open-source-friday/issues/211) | Kong | Andrea Griffiths |
 | May 1, 2026 | [Nicholas Tindle](https://github.com/githubevents/open-source-friday/issues/212) | TBD | Andrea Griffiths |
 | May 1, 2026 | [Jonny Burger](https://github.com/githubevents/open-source-friday/issues/210) | Remotion | Kedasha Kerr |
