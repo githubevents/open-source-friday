@@ -17,5 +17,6 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 | ---- | ----- | ------- | ---- |
 | May 1, 2026 | [Nicholas Tindle](https://github.com/githubevents/open-source-friday/issues/212) | TBD | Andrea Griffiths |
 | May 1, 2026 | [Jonny Burger](https://github.com/githubevents/open-source-friday/issues/210) | Remotion | Kedasha Kerr |
+| May 15, 2026 | [Peter Wilson](https://github.com/githubevents/open-source-friday/issues/215) | cq | TBD |
 | May 29, 2026 | [elvis kahoro](https://github.com/githubevents/open-source-friday/issues/201) | dlt | TBD |
 <!-- SCHEDULE_END -->
