@@ -15,7 +15,6 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 <!-- SCHEDULE_START -->
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
-| May 1, 2026 | [Nicholas Tindle](https://github.com/githubevents/open-source-friday/issues/212) | TBD | Andrea Griffiths |
 | May 15, 2026 | [Peter Wilson](https://github.com/githubevents/open-source-friday/issues/215) | cq | TBD |
 | May 22, 2026 | [Prachi Sethi](https://github.com/githubevents/open-source-friday/issues/216) | OM1 | TBD |
 | May 29, 2026 | [elvis kahoro](https://github.com/githubevents/open-source-friday/issues/201) | dlt | TBD |
