@@ -1,7 +1,4 @@
 
-![OSF Thumbnails](https://github.com/user-attachments/assets/c91aa010-a95b-45f5-97af-755c8e3532a3)
-
-
 
 ## Open Source Friday - Live Stream Event ✨
 _Every Friday at 1 PM ET_
