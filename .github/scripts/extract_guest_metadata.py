@@ -9,6 +9,15 @@ import sys
 import urllib.request
 from datetime import datetime
 
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_DSN", ""),
+    traces_sample_rate=0,
+    environment="github-actions",
+)
+sentry_sdk.set_tag("workflow", "guest-promo-extract")
+
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 REPO = "githubevents/open-source-friday"
 HOST_NAMES = {

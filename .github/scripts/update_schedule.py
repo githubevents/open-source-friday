@@ -14,6 +14,15 @@ from datetime import datetime
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_DSN", ""),
+    traces_sample_rate=0,
+    environment="github-actions",
+)
+sentry_sdk.set_tag("workflow", "update-schedule")
+
 REPO = "githubevents/open-source-friday"
 README_PATH = "README.md"
 START_MARKER = "<!-- SCHEDULE_START -->"

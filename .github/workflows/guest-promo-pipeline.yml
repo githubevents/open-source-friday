@@ -38,10 +38,12 @@ jobs:
       - name: Extract guest metadata
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           METADATA_OUTPUT: video/public/guest-promo.json
         run: |
           ISSUE=${{ github.event.issue.number || inputs.issue_number }}
           echo "Extracting metadata for issue #$ISSUE"
+          pip install sentry-sdk --quiet
           python3 .github/scripts/extract_guest_metadata.py $ISSUE
 
       - name: Generate TTS narration (MAI-Voice-1)
@@ -49,6 +51,7 @@ jobs:
           AZURE_TTS_KEY: ${{ secrets.AZURE_TTS_KEY }}
           AZURE_TTS_ENDPOINT: ${{ secrets.AZURE_TTS_ENDPOINT }}
           AZURE_TTS_VOICE: ${{ secrets.AZURE_TTS_VOICE }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           METADATA_OUTPUT: video/public/guest-promo.json
           NARRATION_OUTPUT: video/public/narration.mp3
         run: python3 .github/scripts/generate_tts.py

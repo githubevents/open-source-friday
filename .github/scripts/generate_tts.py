@@ -7,6 +7,15 @@ import os
 import sys
 import urllib.request
 
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_DSN", ""),
+    traces_sample_rate=0,
+    environment="github-actions",
+)
+sentry_sdk.set_tag("workflow", "guest-promo-tts")
+
 AZURE_TTS_KEY = os.environ.get("AZURE_TTS_KEY", "")
 AZURE_TTS_ENDPOINT = os.environ.get("AZURE_TTS_ENDPOINT", "")
 AZURE_TTS_VOICE = os.environ.get("AZURE_TTS_VOICE", "mai-voice-1")

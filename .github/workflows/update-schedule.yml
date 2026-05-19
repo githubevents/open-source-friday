@@ -33,7 +33,8 @@ jobs:
       - name: Build schedule table and update README
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python .github/scripts/update_schedule.py
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: pip install sentry-sdk --quiet && python .github/scripts/update_schedule.py
 
       - name: Commit if changed
         run: |
