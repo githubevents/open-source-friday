@@ -17,7 +17,7 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 | May 27, 2026 | [@jeffrey-luszcz](https://github.com/githubevents/open-source-friday/issues/218) | TBD | Andrea Griffiths |
 | May 29, 2026 | [elvis kahoro](https://github.com/githubevents/open-source-friday/issues/201) | dlt | TBD |
 | June 12, 2026 | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | TBD |
-| June 15, 2026 | [Ayushman Bhattacharya](https://github.com/githubevents/open-source-friday/issues/223) | OreoOS | TBD |
+| June 15, 2026 | [Ayushman Bhattacharya](https://github.com/githubevents/open-source-friday/issues/223) | Pollinations | TBD |
 | June 19, 2026 | [Angela Wen](https://github.com/githubevents/open-source-friday/issues/222) | TBD | Andrea Griffiths |
 | October 2, 2026 | [Christopher W. Blake](https://github.com/githubevents/open-source-friday/issues/221) | Open Proficiency Model | TBD |
 <!-- SCHEDULE_END -->
