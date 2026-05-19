@@ -16,7 +16,7 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 | May 22, 2026 | [Prachi Sethi](https://github.com/githubevents/open-source-friday/issues/216) | OM1 | Andrea Griffiths |
 | May 27, 2026 | [@jeffrey-luszcz](https://github.com/githubevents/open-source-friday/issues/218) | TBD | Andrea Griffiths |
 | May 29, 2026 | [elvis kahoro](https://github.com/githubevents/open-source-friday/issues/201) | dlt | TBD |
-| June 5, 2026 | [Imran Siddique](https://github.com/githubevents/open-source-friday/issues/220) | Agent Governance Toolkit (AGT) | TBD |
+| June 5, 2026 | [Imran Siddique](https://github.com/githubevents/open-source-friday/issues/220) | Agent Governance Toolkit (AGT) | Andrea Griffiths |
 | June 12, 2026 | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | TBD |
 | June 15, 2026 | [Ayushman Bhattacharya](https://github.com/githubevents/open-source-friday/issues/223) | pollinations.ai | TBD |
 | June 19, 2026 | [Angela Wen](https://github.com/githubevents/open-source-friday/issues/222) | TBD | Kevin Crosby |
