@@ -12,7 +12,7 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 <!-- SCHEDULE_START -->
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
-| May 22, 2026 | [Prachi Sethi](https://github.com/githubevents/open-source-friday/issues/216) | OM1 | TBD |
+| May 22, 2026 | [Prachi Sethi](https://github.com/githubevents/open-source-friday/issues/216) | OM1 | Andrea Griffiths |
 | May 29, 2026 | [elvis kahoro](https://github.com/githubevents/open-source-friday/issues/201) | dlt | TBD |
 | June 19, 2026 | [Angela Wen](https://github.com/githubevents/open-source-friday/issues/222) | TBD | Andrea Griffiths |
 <!-- SCHEDULE_END -->
