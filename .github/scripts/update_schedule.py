@@ -23,6 +23,9 @@ sentry_sdk.init(
 )
 sentry_sdk.set_tag("workflow", "update-schedule")
 
+# TEST: send a message to verify Sentry is connected — remove after confirming
+sentry_sdk.capture_message("✅ Sentry connected to OSF update-schedule workflow", level="info")
+
 REPO = "githubevents/open-source-friday"
 README_PATH = "README.md"
 START_MARKER = "<!-- SCHEDULE_START -->"
