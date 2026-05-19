@@ -20,7 +20,6 @@ END_MARKER = "<!-- SCHEDULE_END -->"
 # Map GitHub logins → display names for the hosting team
 HOST_NAMES = {
     "AndreaGriffiths11": "Andrea Griffiths",
-    "LadyKerr": "Kedasha Kerr",
     "KevinCrosby": "Kevin Crosby",
 }
 

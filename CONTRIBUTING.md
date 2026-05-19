@@ -4,7 +4,7 @@ Thank you for your interest in contributing to Open Source Friday! 🎉
 
 ## How to Participate as a Guest
 
-If you'd like to be featured on the show, check out our [project criteria](admin/project-criteria.md) and submit a [guest invite request](https://github.com/githubevents/open-source-friday/issues/new?template=osf-guest-invite.yml&assignees=AndreaGriffiths11%2CLadyKerr&labels=open-source%2Copen-source-friday%2Cpending%2Ctwitch).
+If you'd like to be featured on the show, check out our [project criteria](admin/project-criteria.md) and submit a [guest invite request](https://github.com/githubevents/open-source-friday/issues/new?template=osf-guest-invite.yml&assignees=AndreaGriffiths11%2CKevinCrosby&labels=open-source%2Copen-source-friday%2Cpending%2Ctwitch).
 
 ## Contributing to This Repository
 
@@ -36,4 +36,4 @@ This project follows [GitHub's Community Guidelines](https://docs.github.com/en/
 
 ## Questions?
 
-Open an issue or reach out to the maintainers: [@AndreaGriffiths11](https://github.com/AndreaGriffiths11), [@LadyKerr](https://github.com/LadyKerr), and [@KevinCrosby](https://github.com/KevinCrosby).
+Open an issue or reach out to the maintainers: [@AndreaGriffiths11](https://github.com/AndreaGriffiths11) and [@KevinCrosby](https://github.com/KevinCrosby).

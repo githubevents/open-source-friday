@@ -16,13 +16,13 @@ body:
     attributes:
       label: Nombre
       description: Su nombre
-      placeholder: "Kedasha Kerr"
+      placeholder: "Andrea Griffiths"
   - type: input
     id: github_user
     attributes:
       label: Usuario de GitHub
       description: Su nombre de usuario en GitHub
-      placeholder: "@LadyKerr"
+      placeholder: "@AndreaGriffiths11"
   - type: textarea
     id: acerca_de_ti
     attributes:
@@ -54,7 +54,7 @@ body:
     attributes:
       label: URL de Twitter
       description: Tu perfil de Twitter
-      placeholder: "@itsthatladydev"
+      placeholder: "@alacolombiadev"
   - type: input
     id: social_linkedin
     attributes:
