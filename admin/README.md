@@ -12,6 +12,6 @@ Ideal flow for actions:
 
 Not done yet:
 
-- day before the event the workflow sends a reminder to guest in the issue
+- the day before the event, the workflow sends a reminder to guest in the issue
 - post event the workflow sends a thank you message to the guest in the issue
 - post event the host closes the issue
