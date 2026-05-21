@@ -16,7 +16,7 @@ Before:
 - [ ] [Create event in streamyard - Twitter, Twitch, Linkedin, Youtube channels](https://streamyard.com/teams/nCBWjEVBOAx2Rx4KOrFQyoal/broadcasts)
 - [ ] [Create meetup event](https://www.meetup.com/github/)
 - [ ] Confirm time with guest
-- [ ] Send preparation doc to guest [link](https://gist.github.com/bdougie/2f54b9df587eeefdb7399543f057eda5)
+- [ ] Send [preparation doc](https://gist.github.com/bdougie/2f54b9df587eeefdb7399543f057eda5) to guest
 - [ ] Choose guest topic (a good story about their project)
 
 ### Ensure/during:
