@@ -4,6 +4,8 @@ parses each issue body for the guest name and stream date, looks up the host
 from the issue assignees, and rewrites the schedule table in README.md.
 """
 
+from __future__ import annotations
+
 import json
 import os
 import re
@@ -11,6 +13,18 @@ import sys
 from datetime import datetime
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
+
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_DSN", ""),
+    traces_sample_rate=0,
+    environment="github-actions",
+)
+sentry_sdk.set_tag("workflow", "update-schedule")
+
+# TEST: send a message to verify Sentry is connected — remove after confirming
+sentry_sdk.capture_message("✅ Sentry connected to OSF update-schedule workflow", level="info")
 
 REPO = "githubevents/open-source-friday"
 README_PATH = "README.md"
@@ -20,7 +34,6 @@ END_MARKER = "<!-- SCHEDULE_END -->"
 # Map GitHub logins → display names for the hosting team
 HOST_NAMES = {
     "AndreaGriffiths11": "Andrea Griffiths",
-    "LadyKerr": "Kedasha Kerr",
     "KevinCrosby": "Kevin Crosby",
 }
 
@@ -78,6 +91,10 @@ def parse_date_from_title(title: str) -> str:
     m = re.search(r"(\d{1,2}-\d{1,2}-\d{4})", title)
     if m:
         return m.group(1)
+    # 2-digit year MM-DD-YY e.g. 06-19-26
+    m = re.search(r"(\d{1,2}-\d{1,2}-(\d{2}))$", title)
+    if m and len(m.group(2)) == 2:
+        return m.group(1)[:-2] + "20" + m.group(2)
     # "Month D, YYYY" or "Month DD YYYY"
     m = re.search(rf"({_MONTHS})\s+(\d{{1,2}}),?\s+(\d{{4}})", title)
     if m:
@@ -121,9 +138,15 @@ def build_row(issue: dict) -> dict | None:
     # For manually-created issues the guest name may be in the title
     # e.g. "Open Source Friday - Guest Name - MM-DD-YYYY"
     if not guest_name:
+        # First try Calendly-style body: "Name: Angela Wen @handle"
+        m = re.search(r"Name:\s+(.+?)(?:\s*@\S+)?\s*$", body, re.MULTILINE)
+        if m:
+            guest_name = m.group(1).strip()
+
+    if not guest_name:
         parts = [p.strip() for p in re.split(r"\s+-\s+", title)]
         # Remove the leading "Open Source Friday..." segment and trailing date segment
-        candidates = [p for p in parts[1:] if not re.search(r"\d{4}", p)]
+        candidates = [p for p in parts[1:] if not re.search(r"\d{4}|\d{2}$", p)]
         if candidates:
             guest_name = candidates[0]
 

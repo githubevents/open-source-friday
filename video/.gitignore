@@ -1,0 +1,5 @@
+# Generated files — do not commit
+public/narration.mp3
+public/guest-promo.json
+out/
+node_modules/

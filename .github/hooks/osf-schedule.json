@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash .github/hooks/scripts/show-schedule.sh",
+        "cwd": ".",
+        "timeout": 10
+      }
+    ],
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "bash .github/hooks/scripts/on-tool-use.sh",
+        "cwd": ".",
+        "timeout": 60
+      }
+    ]
+  }
+}

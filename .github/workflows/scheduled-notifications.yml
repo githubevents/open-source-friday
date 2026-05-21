@@ -49,7 +49,7 @@ jobs:
               '',
               'Let us know if you have any questions!',
               '',
-              'Kedasha, Andrea & Kevin 👯',
+              'Andrea & Kevin 👯',
             ].join('\n');
 
             try {
@@ -74,7 +74,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const commentBody = [
-              'Hi @LadyKerr, @AndreaGriffiths11, and @KevinCrosby,',
+              'Hi @AndreaGriffiths11 and @KevinCrosby,',
               '',
               'This stream has been scheduled. Please complete the following tasks:',
               '',

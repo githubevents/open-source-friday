@@ -104,6 +104,7 @@ jobs:
 
       - name: Generate welcome message with Copilot
         id: personalize
+        timeout-minutes: 2
         env:
           GH_TOKEN: ${{ secrets.COPILOT_PAT }}
           GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
@@ -144,25 +145,30 @@ jobs:
             '',
             'Keep it natural and conversational. No emojis. No markdown. Plain text only.'
           ];
+          const timeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Copilot SDK timed out after 60s')), 60000)
+          );
           try {
             const { CopilotClient } = await import('@github/copilot-sdk');
-            console. log('Initializing Copilot SDK...');
+            console.log('Initializing Copilot SDK...');
             const client = new CopilotClient();
             await client.start();
-            console.log('Creating session.. .');
+            console.log('Creating session...');
             const session = await client.createSession();
             const prompt = promptLines.join('\n');
             console.log('Sending prompt to Copilot...');
-            const response = await session. sendAndWait({ prompt:  prompt });
-            if (response && response.data && response.data. content) {
+            const response = await Promise.race([
+              session.sendAndWait({ prompt }),
+              timeout
+            ]);
+            if (response && response.data && response.data.content) {
               personalizedMessage = response.data.content;
               console.log('Received personalized message from Copilot');
             }
-            await session. destroy();
+            await session.destroy();
             await client.stop();
           } catch (error) {
-            console.error('Copilot SDK error:', error.message);
-            console.error('Stack:', error.stack);
+            console.error('Copilot SDK error (using fallback):', error.message);
           }
           if (!personalizedMessage) {
             console.log('Using fallback message');

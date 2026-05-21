@@ -1,0 +1,85 @@
+name: Generate Guest Promo Video
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Issue number to generate promo for"
+        required: true
+        type: number
+
+jobs:
+  generate-promo:
+    # Run when labeled "approved", or on manual dispatch
+    if: github.event.label.name == 'approved' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: video/package.json
+
+      - name: Install Remotion dependencies
+        run: cd video && npm install
+
+      - name: Extract guest metadata
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          METADATA_OUTPUT: video/public/guest-promo.json
+        run: |
+          ISSUE=${{ github.event.issue.number || inputs.issue_number }}
+          echo "Extracting metadata for issue #$ISSUE"
+          pip install sentry-sdk --quiet
+          python3 .github/scripts/extract_guest_metadata.py $ISSUE
+
+      - name: Generate TTS narration (MAI-Voice-1)
+        env:
+          AZURE_TTS_KEY: ${{ secrets.AZURE_TTS_KEY }}
+          AZURE_TTS_ENDPOINT: ${{ secrets.AZURE_TTS_ENDPOINT }}
+          AZURE_TTS_VOICE: ${{ secrets.AZURE_TTS_VOICE }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          METADATA_OUTPUT: video/public/guest-promo.json
+          NARRATION_OUTPUT: video/public/narration.mp3
+        run: python3 .github/scripts/generate_tts.py
+
+      - name: Render promo video
+        run: |
+          PROPS=$(cat video/public/guest-promo.json)
+          cd video
+          npx remotion render src/index.ts GuestPromo out/guest-promo.mp4 \
+            --props="$PROPS" \
+            --gl=angle
+
+      - name: Upload promo video artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: guest-promo-${{ github.event.issue.number || inputs.issue_number }}
+          path: video/out/guest-promo.mp4
+          retention-days: 30
+
+      - name: Comment on issue with download link
+        if: github.event_name == 'issues'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🎬 **Guest promo video generated!**\n\nDownload \`guest-promo.mp4\` from the [workflow artifacts](${runUrl}) (available for 30 days).`,
+            });
