@@ -12,8 +12,6 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 <!-- SCHEDULE_START -->
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
-| May 22, 2026 | [Age assurance laws and open source: what maintainers need to know](https://github.com/githubevents/open-source-friday/issues/217) | TBD | Andrea Griffiths |
-| May 22, 2026 | [Prachi Sethi](https://github.com/githubevents/open-source-friday/issues/216) | OM1 | Andrea Griffiths |
 | May 27, 2026 | [@jeffrey-luszcz](https://github.com/githubevents/open-source-friday/issues/218) | TBD | Andrea Griffiths |
 | May 29, 2026 | [elvis kahoro](https://github.com/githubevents/open-source-friday/issues/201) | dlt | Andrea Griffiths |
 | June 5, 2026 | [Imran Siddique](https://github.com/githubevents/open-source-friday/issues/220) | Agent Governance Toolkit (AGT) | Andrea Griffiths |
