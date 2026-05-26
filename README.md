@@ -21,3 +21,7 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 | June 26, 2026 | [Maddy Montaquila + David Fowler](https://github.com/githubevents/open-source-friday/issues/225) | Aspire | brunoborges |
 | October 2, 2026 | [Christopher W. Blake](https://github.com/githubevents/open-source-friday/issues/221) | Open Proficiency Model | TBD |
 <!-- SCHEDULE_END -->
+
+## Want to feature your open source project? 🛠️
+
+Open Source Friday is open year-round. We'll spotlight your project on the livestream, walk through the repo on air, and connect you with new contributors. Check the [project criteria](https://github.com/githubevents/open-source-friday/blob/main/admin/project-criteria.md) and open a [guest invite issue](https://github.com/githubevents/open-source-friday/issues/new?template=osf-guest-invite.yml&assignees=AndreaGriffiths11%2CKevinCrosby&labels=open-source%2Copen-source-friday%2Cpending%2Ctwitch) to get on the schedule.
