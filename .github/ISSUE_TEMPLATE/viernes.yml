@@ -5,6 +5,8 @@ labels: ["open-source-viernes", "open-source", "twitch", "pending", "spanish"]
 assignees: 
   - AndreaGriffiths11
   - KevinCrosby
+  - marlenezw
+  - madebygps
 body:
   - type: markdown
     attributes:

@@ -35,6 +35,8 @@ END_MARKER = "<!-- SCHEDULE_END -->"
 HOST_NAMES = {
     "AndreaGriffiths11": "Andrea Griffiths",
     "KevinCrosby": "Kevin Crosby",
+    "marlenezw": "Marlene Mhangami",
+    "madebygps": "Gwyneth Peña-Siguenza",
 }
 
 

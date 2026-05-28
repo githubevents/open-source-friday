@@ -23,6 +23,8 @@ REPO = "githubevents/open-source-friday"
 HOST_NAMES = {
     "AndreaGriffiths11": "Andrea Griffiths",
     "KevinCrosby": "Kevin Crosby",
+    "marlenezw": "Marlene Mhangami",
+    "madebygps": "Gwyneth Peña-Siguenza",
 }
 
 
