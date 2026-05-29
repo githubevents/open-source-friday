@@ -79,10 +79,8 @@ jobs:
               'This stream has been scheduled. Please complete the following tasks:',
               '',
               '- [ ] Create social card',
-              '- [ ] Create meetup link',
-              '- [ ] Create and schedule twitch stream (LinkedIn, Twitch, YouTube)',
-              '- [ ] Schedule social media post (Twitter)',
-              '- [ ] Send prep doc to guests',
+              '- [ ] Create and schedule stream in StreamYard (LinkedIn, Twitch, YouTube)',
+              '- [ ] Schedule social media post',
               '',
               'You can find the instructions in this [guide](https://github.com/githubevents/open-source-friday/blob/main/admin/guest-assets/Streaming-Guide.md).',
             ].join('\n');
