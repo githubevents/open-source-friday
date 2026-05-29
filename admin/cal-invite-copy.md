@@ -12,4 +12,4 @@ Here is a recording guide for streaming remotely.
 
 
 Chat soon!
-Andrea & Kevin
+Andrea, Kevin, Marlene & Gwen
