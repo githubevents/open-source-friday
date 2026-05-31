@@ -89,10 +89,16 @@ def main() -> None:
     stream_date = parse_date(raw_date) if raw_date else "Date TBD"
 
     assignees = issue.get("assignees") or []
-    host_name = "TBD"
-    if assignees:
+    # Every new issue auto-assigns all four hosts via the issue template.
+    # The actual host is decided in a team meeting and only known once the
+    # other assignees have been removed. Treat host as TBD until exactly one
+    # assignee remains — the video template hides the "with {host}" line when
+    # host_name == "TBD".
+    if len(assignees) == 1:
         login = assignees[0]["login"]
         host_name = HOST_NAMES.get(login, login)
+    else:
+        host_name = "TBD"
 
     # Truncate bio for video overlay
     if bio and len(bio) > 280:
