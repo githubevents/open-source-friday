@@ -12,7 +12,6 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 <!-- SCHEDULE_START -->
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
-| May 29, 2026 | [elvis kahoro](https://github.com/githubevents/open-source-friday/issues/201) | dlt | Andrea Griffiths |
 | June 5, 2026 | [Imran Siddique](https://github.com/githubevents/open-source-friday/issues/220) | Agent Governance Toolkit (AGT) | Andrea Griffiths |
 | June 12, 2026 | [Nick Taylor](https://github.com/githubevents/open-source-friday/issues/228) | Pomerium | Andrea Griffiths |
 | June 12, 2026 | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | Marlene Mhangami |
