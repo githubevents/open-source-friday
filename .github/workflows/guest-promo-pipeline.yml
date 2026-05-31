@@ -12,8 +12,12 @@ on:
 
 jobs:
   generate-promo:
-    # Run when labeled "approved", or on manual dispatch
-    if: github.event.label.name == 'approved' || github.event_name == 'workflow_dispatch'
+    # Trigger only once the stream is actually on the calendar (the `scheduled`
+    # label is applied after the date is locked in), or on manual dispatch.
+    # We deliberately do not trigger on the `approved` label because at that
+    # point the guest has only just been invited to pick a slot — there is no
+    # date yet, so the promo would render with placeholder text.
+    if: github.event.label.name == 'scheduled' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       issues: write
