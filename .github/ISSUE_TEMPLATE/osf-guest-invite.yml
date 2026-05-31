@@ -15,6 +15,8 @@ body:
         ## Open Source Friday Guest Invite Form
         #### :sparkles: Please fill out the following information to be invited to Open Source Friday. The stream occurs weekly at 1pm EST on the [GitHub Twitch Channel](https://www.twitch.tv/github). :sparkles:
 
+        **You don't need a stream date to submit.** We review every request, and once your project is approved we'll apply the `approved` label and a bot will comment on this issue with a calendar link so you can book your slot. If you already have a date in mind, add it below — otherwise just check "Not yet" and we'll take it from there.
+
   - type: input
     id: name
     attributes:
@@ -54,7 +56,7 @@ body:
     id: stream_date
     attributes:
       label: Stream Date
-      description: Did you schedule a date for your stream?
+      description: "Already picked a date from https://gh.io/osf-booking? Let us know. If not, choose \"Not yet\" — we'll send you the booking link once your request is approved."
       options:
         - label: "Yes"
         - label: "Not yet"
@@ -63,7 +65,7 @@ body:
     id: dates_1
     attributes:
       label: Dates
-      description: what date did you schedule for Open Source Friday stream?
+      description: "Optional — only fill this in if you've already booked a slot. Format: MM-DD-YYYY."
       placeholder: MM-DD-YYYY
 
   - type: input

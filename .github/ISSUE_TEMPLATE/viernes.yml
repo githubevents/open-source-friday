@@ -13,6 +13,8 @@ body:
       value: |
         ## Formulario de Invitación para Invitados de Open Source Friday
         #### :sparkles: Por favor, complete la siguiente información para ser invitado a Open Source Viernes. La fecha de la transmisión ser confirmada al aprovar el invitado :sparkles:
+
+        **No necesitas una fecha para enviar tu solicitud.** Revisamos cada propuesta y, cuando tu proyecto sea aprobado, aplicaremos la etiqueta `approved` y un bot dejará un comentario en este issue con el enlace al calendario para que reserves tu transmisión. Si ya tienes una fecha en mente, inclúyela abajo — si no, marca "Aún no" y nosotros nos encargamos del resto.
   - type: input
     id: nombre
     attributes:
@@ -47,7 +49,7 @@ body:
     id: fecha_transmision
     attributes:
       label: Fecha de Transmisión
-      description: ¿Has programado una fecha para tu transmisión?
+      description: "¿Ya escogiste una fecha en https://gh.io/osf-booking? Cuéntanos. Si no, marca \"Aún no\" — te enviaremos el enlace para reservar cuando tu solicitud sea aprobada."
       options:
         - label: "Sí"
         - label: "Aún no"
