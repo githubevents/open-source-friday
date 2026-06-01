@@ -14,7 +14,7 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 | ---- | ----- | ------- | ---- |
 | June 5, 2026 | [Imran Siddique](https://github.com/githubevents/open-source-friday/issues/220) | Agent Governance Toolkit (AGT) | Andrea Griffiths |
 | June 12, 2026 | [Nick Taylor](https://github.com/githubevents/open-source-friday/issues/228) | Pomerium | Andrea Griffiths |
-| TBD | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | Marlene Mhangami |
+| June 12, 2026 | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | Marlene Mhangami |
 | June 19, 2026 | [Angela Wen](https://github.com/githubevents/open-source-friday/issues/222) | TBD | Kevin Crosby |
 | June 26, 2026 | [Maddy Montaquila + David Fowler](https://github.com/githubevents/open-source-friday/issues/225) | Aspire | brunoborges |
 | July 10, 2026 | [Ayushman Bhattacharya](https://github.com/githubevents/open-source-friday/issues/223) | pollinations.ai | Gwyneth Peña-Siguenza |
