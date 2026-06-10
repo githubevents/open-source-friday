@@ -13,10 +13,10 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
 | June 12, 2026 | [Nick Taylor](https://github.com/githubevents/open-source-friday/issues/228) | Pomerium | Andrea Griffiths |
-| June 12, 2026 | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | Marlene Mhangami |
 | June 19, 2026 | [Angela Wen](https://github.com/githubevents/open-source-friday/issues/222) | TBD | Kevin Crosby |
 | June 26, 2026 | [Maddy Montaquila + David Fowler](https://github.com/githubevents/open-source-friday/issues/225) | Aspire | brunoborges |
 | July 10, 2026 | [Ayushman Bhattacharya](https://github.com/githubevents/open-source-friday/issues/223) | pollinations.ai | Gwyneth Peña-Siguenza |
+| July 17, 2026 | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | Marlene Mhangami |
 | October 2, 2026 | [Christopher W. Blake](https://github.com/githubevents/open-source-friday/issues/221) | Open Proficiency Model | Andrea Griffiths |
 <!-- SCHEDULE_END -->
 
