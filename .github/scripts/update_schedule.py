@@ -165,7 +165,7 @@ def build_row(issue: dict) -> dict | None:
     assignees = issue.get("assignees") or []
     if assignees:
         host = ", ".join(
-            HOST_NAMES[a["login"]] for a in assignees
+            HOST_NAMES.get(a["login"], a["login"]) for a in assignees
         )
     else:
         host = "TBD"
