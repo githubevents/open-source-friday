@@ -12,7 +12,6 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 <!-- SCHEDULE_START -->
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
-| June 19, 2026 | [Angela Wen](https://github.com/githubevents/open-source-friday/issues/222) | TBD | Kevin Crosby |
 | June 26, 2026 | [Maddy Montaquila + David Fowler](https://github.com/githubevents/open-source-friday/issues/225) | Aspire | brunoborges |
 | July 10, 2026 | [Ayushman Bhattacharya](https://github.com/githubevents/open-source-friday/issues/223) | pollinations.ai | Gwyneth Peña-Siguenza |
 | July 17, 2026 | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | Marlene Mhangami |
