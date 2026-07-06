@@ -13,7 +13,6 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
 | July 10, 2026 | [Ayushman Bhattacharya](https://github.com/githubevents/open-source-friday/issues/223) | pollinations.ai | Gwyneth Peña-Siguenza |
-| July 17, 2026 | [Joseph Katsioloudes](https://github.com/githubevents/open-source-friday/issues/219) | Secure Code Game | Marlene Mhangami |
 | August 21, 2026 | [https://github.com/juliusbrussee/caveman](https://github.com/githubevents/open-source-friday/issues/239) | Caveman | Andrea Griffiths |
 | October 2, 2026 | [Christopher W. Blake](https://github.com/githubevents/open-source-friday/issues/221) | Open Proficiency Model | Andrea Griffiths |
 <!-- SCHEDULE_END -->
