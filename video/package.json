@@ -7,8 +7,8 @@
     "render": "npx remotion render src/index.ts GuestPromo out/guest-promo.mp4 --gl=angle"
   },
   "dependencies": {
-    "@remotion/cli": "4.0.290",
-    "remotion": "4.0.290"
+    "@remotion/cli": "4.0.485",
+    "remotion": "4.0.485"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",
