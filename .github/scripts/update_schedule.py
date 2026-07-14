@@ -104,12 +104,12 @@ def parse_date_from_title(title: str) -> str:
 def parse_date(raw: str) -> datetime | None:
     """Try common date formats found in the issues."""
     raw = raw.strip()
-    for fmt in ("%m-%d-%Y", "%m/%d/%Y", "%B %d, %Y", "%B %-d, %Y"):
+    for fmt in ("%Y-%m-%d", "%Y/%m/%d", "%m-%d-%Y", "%m/%d/%Y", "%B %d, %Y", "%B %-d, %Y"):
         try:
             return datetime.strptime(raw, fmt)
         except ValueError:
             pass
-    # Try without leading zeros via regex
+    # Try without leading zeros via regex — month-first branch
     m = re.match(r"^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$", raw)
     if m:
         month, day, year = int(m.group(1)), int(m.group(2)), int(m.group(3))
