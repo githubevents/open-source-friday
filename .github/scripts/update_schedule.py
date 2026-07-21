@@ -23,9 +23,6 @@ sentry_sdk.init(
 )
 sentry_sdk.set_tag("workflow", "update-schedule")
 
-# TEST: send a message to verify Sentry is connected — remove after confirming
-sentry_sdk.capture_message("✅ Sentry connected to OSF update-schedule workflow", level="info")
-
 REPO = "githubevents/open-source-friday"
 README_PATH = "README.md"
 START_MARKER = "<!-- SCHEDULE_START -->"
@@ -85,6 +82,10 @@ _MONTHS = (
 
 def parse_date_from_title(title: str) -> str:
     """Try to extract a date string from an issue title."""
+    # ISO 8601 YYYY-MM-DD e.g. 2026-07-31
+    m = re.search(r"(?<!\d)(\d{4}-\d{2}-\d{2})(?!\d)", title)
+    if m:
+        return m.group(1)
     # Bracketed MM-DD-YYYY e.g. [04-17-2026]
     m = re.search(r"\[(\d{1,2}-\d{1,2}-\d{4})\]", title)
     if m:
@@ -107,7 +108,7 @@ def parse_date_from_title(title: str) -> str:
 def parse_date(raw: str) -> datetime | None:
     """Try common date formats found in the issues."""
     raw = raw.strip()
-    for fmt in ("%m-%d-%Y", "%m/%d/%Y", "%B %d, %Y", "%B %-d, %Y"):
+    for fmt in ("%Y-%m-%d", "%m-%d-%Y", "%m/%d/%Y", "%B %d, %Y", "%B %-d, %Y"):
         try:
             return datetime.strptime(raw, fmt)
         except ValueError:
