@@ -160,8 +160,9 @@ def build_row(issue: dict) -> dict | None:
 
     date_obj = parse_date(raw_date)
     if not date_obj:
-        print(f"  Skipping #{number}: could not parse date '{raw_date}'")
-        return None
+        raise ValueError(
+            f"Issue #{number} has an unparseable scheduled date: {raw_date!r}"
+        )
 
     assignees = issue.get("assignees") or []
     if assignees:
