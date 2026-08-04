@@ -105,6 +105,7 @@ jobs:
       - name: Generate welcome message with Copilot
         id: personalize
         timeout-minutes: 2
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.COPILOT_PAT }}
           GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
@@ -145,30 +146,55 @@ jobs:
             '',
             'Keep it natural and conversational. No emojis. No markdown. Plain text only.'
           ];
-          const timeout = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Copilot SDK timed out after 60s')), 60000)
-          );
+          const withTimeout = (operation, name) => {
+            let timeoutId;
+            const timeout = new Promise((_, reject) => {
+              timeoutId = setTimeout(
+                () => reject(new Error(name + ' timed out after 60s')),
+                60000
+              );
+            });
+            return Promise.race([operation, timeout]).finally(() => clearTimeout(timeoutId));
+          };
+          let client;
+          let session;
           try {
             const { CopilotClient } = await import('@github/copilot-sdk');
             console.log('Initializing Copilot SDK...');
-            const client = new CopilotClient();
-            await client.start();
+            client = new CopilotClient();
+            await withTimeout(client.start(), 'Copilot startup');
             console.log('Creating session...');
-            const session = await client.createSession();
+            session = await withTimeout(
+              client.createSession(),
+              'Copilot session creation'
+            );
             const prompt = promptLines.join('\n');
             console.log('Sending prompt to Copilot...');
-            const response = await Promise.race([
+            const response = await withTimeout(
               session.sendAndWait({ prompt }),
-              timeout
-            ]);
+              'Copilot response'
+            );
             if (response && response.data && response.data.content) {
               personalizedMessage = response.data.content;
               console.log('Received personalized message from Copilot');
             }
-            await session.destroy();
-            await client.stop();
           } catch (error) {
             console.error('Copilot SDK error (using fallback):', error.message);
+          } finally {
+            if (session) {
+              try {
+                await session.destroy();
+              } catch (error) {
+                console.warn('Failed to destroy Copilot session:', error.message);
+              }
+            }
+            if (client) {
+              try {
+                await client.stop();
+              } catch (error) {
+                console.warn('Failed to stop Copilot client:', error.message);
+              }
+            }
           }
           if (!personalizedMessage) {
             console.log('Using fallback message');
@@ -186,7 +212,7 @@ jobs:
 
       - name: Generate thumbnail
         id: thumbnail
-        if: ${{ steps.mode.outputs.mode == 'full-thumbnail' }}
+        if: ${{ always() && steps.mode.outputs.mode == 'full-thumbnail' }}
         env:
           GUEST_NAME: ${{ steps.parse.outputs.guest_name }}
           HANDLE: ${{ steps.parse.outputs.handle }}
@@ -303,7 +329,7 @@ jobs:
           node thumbnail.mjs
 
       - name: Upload thumbnail artifact
-        if: steps.thumbnail.outputs.thumbnail_generated == 'true'
+        if: ${{ always() && steps.thumbnail.outputs.thumbnail_generated == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: thumbnail-issue-${{ steps.get-issue.outputs.issue_number }}
@@ -311,6 +337,7 @@ jobs:
           retention-days: 90
 
       - name: Post welcome comment
+        if: ${{ always() }}
         uses: actions/github-script@v7
         env:
           PERSONALIZED_MESSAGE: ${{ steps.personalize.outputs.personalized_message }}
@@ -321,8 +348,9 @@ jobs:
           RUN_ID: ${{ github.run_id }}
         with:
           script: |
-            const personalizedMessage = process.env.PERSONALIZED_MESSAGE;
             const guestName = process.env.GUEST_NAME;
+            const personalizedMessage = process.env.PERSONALIZED_MESSAGE ||
+              (guestName + ', we are excited to have you on Open Source Friday! We cannot wait to hear more about your work.\n\nThe Open Source Friday Team');
             const handle = process.env.HANDLE;
             const issueNumber = parseInt(process.env.ISSUE_NUMBER, 10);
             const thumbnailGenerated = process.env.THUMBNAIL_GENERATED === 'true';
