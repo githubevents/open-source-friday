@@ -17,4 +17,4 @@ Feel free to ping us if you have any questions or need more details on anything!
 
 Warm regards,
 
-Andrea, Kevin, Marlene & Gwen
+Andrea, Kevin, Marlene, Gwen & Sarah
