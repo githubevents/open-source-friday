@@ -90,7 +90,7 @@ def main() -> None:
     stream_date = parse_date(raw_date) if raw_date else "Date TBD"
 
     assignees = issue.get("assignees") or []
-    # Every new issue auto-assigns all four hosts via the issue template.
+    # Every new issue auto-assigns all five hosts via the issue template.
     # The actual host is decided in a team meeting and only known once the
     # other assignees have been removed. Treat host as TBD until exactly one
     # assignee remains — the video template hides the "with {host}" line when
