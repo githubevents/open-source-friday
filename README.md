@@ -12,8 +12,12 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 <!-- SCHEDULE_START -->
 | Date | Guest | Project | Host |
 | ---- | ----- | ------- | ---- |
-| August 21, 2026 | [https://github.com/juliusbrussee/caveman](https://github.com/githubevents/open-source-friday/issues/239) | Caveman | Andrea Griffiths |
-| October 2, 2026 | [Christopher W. Blake](https://github.com/githubevents/open-source-friday/issues/221) | Open Proficiency Model | Andrea Griffiths |
+| September 25, 2026 | [Sarah Funkhouser](https://github.com/githubevents/open-source-friday/issues/247) | Openlane | Kevin Crosby, Marlene Mhangami |
+| October 9, 2026 | [Ayush Shekhar](https://github.com/githubevents/open-source-friday/issues/244) | ScreenMind | Kevin Crosby, Andrea Griffiths, Marlene Mhangami |
+| October 16, 2026 | [Manfred Riem](https://github.com/githubevents/open-source-friday/issues/255) | Spec Kit | Sarah Kaiser |
+| October 23, 2026 | [Hannes Rudolph](https://github.com/githubevents/open-source-friday/issues/259) | OpenClaw | TBD |
+| November 6, 2026 | [Ali Tavallaie](https://github.com/githubevents/open-source-friday/issues/261) | pgmq | Sarah Kaiser |
+| November 13, 2026 | [Madelyn Olson](https://github.com/githubevents/open-source-friday/issues/260) | Valkey | Kevin Crosby, Andrea Griffiths, Marlene Mhangami |
 <!-- SCHEDULE_END -->
 
 ## Want to feature your open source project? 🛠️
