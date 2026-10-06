@@ -10,14 +10,14 @@ Don't miss this chance to explore the world of Open Source every Friday. We're l
 ## Upcoming Streams 📅
 
 <!-- SCHEDULE_START -->
-| Date | Guest | Project | Host |
-| ---- | ----- | ------- | ---- |
-| September 25, 2026 | [Sarah Funkhouser](https://github.com/githubevents/open-source-friday/issues/247) | Openlane | Kevin Crosby, Marlene Mhangami |
-| October 9, 2026 | [Ayush Shekhar](https://github.com/githubevents/open-source-friday/issues/244) | ScreenMind | Kevin Crosby, Andrea Griffiths, Marlene Mhangami |
-| October 16, 2026 | [Manfred Riem](https://github.com/githubevents/open-source-friday/issues/255) | Spec Kit | Sarah Kaiser |
-| October 23, 2026 | [Hannes Rudolph](https://github.com/githubevents/open-source-friday/issues/259) | OpenClaw | Andrea Griffiths |
-| November 6, 2026 | [Ali Tavallaie](https://github.com/githubevents/open-source-friday/issues/261) | pgmq | Sarah Kaiser |
-| November 13, 2026 | [Madelyn Olson](https://github.com/githubevents/open-source-friday/issues/260) | Valkey | Kevin Crosby, Andrea Griffiths, Marlene Mhangami |
+| Date | Guest | Project | Host | YouTube |
+| ---- | ----- | ------- | ---- | ------- |
+| October 9, 2026 | [Ayush Shekhar](https://github.com/githubevents/open-source-friday/issues/244) | ScreenMind | Gwyneth Peña-Siguenza | [Watch](https://www.youtube.com/watch?v=N_cGKFGMxxc) |
+| October 16, 2026 | [Manfred Riem and Nicole Haugen](https://github.com/githubevents/open-source-friday/issues/255) | Spec Kit 1.0 | Sarah Kaiser | TBD |
+| October 23, 2026 | [Hannes Rudolph](https://github.com/githubevents/open-source-friday/issues/259) | OpenClaw | Sarah Kaiser | TBD |
+| October 30, 2026 | [Sarah Funkhouser](https://github.com/githubevents/open-source-friday/issues/247) | Openlane | Marlene Mhangami | TBD |
+| November 6, 2026 | [Ali Tavallaie](https://github.com/githubevents/open-source-friday/issues/261) | pgmq | Sarah Kaiser | TBD |
+| November 13, 2026 | [Madelyn Olson](https://github.com/githubevents/open-source-friday/issues/260) | Valkey | Andrea Griffiths | TBD |
 <!-- SCHEDULE_END -->
 
 ## Want to feature your open source project? 🛠️
