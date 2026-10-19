@@ -54,18 +54,16 @@ body:
       options:
         - label: "Sí"
         - label: "Aún no"
-  - type: input
-    id: social_twitter
+  - type: textarea
+    id: social_links
     attributes:
-      label: URL de Twitter
-      description: Tu perfil de Twitter
-      placeholder: "@alacolombiadev"
-  - type: input
-    id: social_linkedin
-    attributes:
-      label: URL de LinkedIn
-      description: Tu perfil de LinkedIn
-      placeholder: "linkedin.com/in/tu-perfil"
+      label: Enlaces a redes sociales
+      description: "Opcional: Comparte enlaces a los perfiles sociales que quieras que usemos para promocionar tu transmisión (LinkedIn, Mastodon, Bluesky, X o cualquier otra plataforma). Añade una URL por línea."
+      placeholder: |
+        https://www.linkedin.com/in/tu-perfil
+        https://mastodon.social/@tu-perfil
+        https://bsky.app/profile/tu-perfil.bsky.social
+        https://x.com/tu-perfil
   - type: textarea
     id: mas_info
     attributes:
