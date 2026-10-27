@@ -69,19 +69,16 @@ body:
       description: "Optional — only fill this in if you've already booked a slot. Format: MM-DD-YYYY."
       placeholder: MM-DD-YYYY
 
-  - type: input
-    id: social_twitter
+  - type: textarea
+    id: social_links
     attributes:
-      label: Twitter URL
-      description: Your Twitter profile
-      placeholder: "@alacolombiadev"
-
-  - type: input
-    id: social_linkedin
-    attributes:
-      label: LinkedIn URL
-      description: Your LinkedIn profile
-      placeholder: "linkedin.com/in/your-profile"
+      label: Social links
+      description: "Optional: Share links to any social profiles you'd like us to use when promoting your stream (LinkedIn, Mastodon, Bluesky, X, or any other platform). Add one URL per line."
+      placeholder: |
+        https://www.linkedin.com/in/your-profile
+        https://mastodon.social/@your-profile
+        https://bsky.app/profile/your-profile.bsky.social
+        https://x.com/your-profile
 
   - type: textarea
     id: more_info
